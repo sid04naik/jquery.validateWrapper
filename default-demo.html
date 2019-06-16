@@ -33,10 +33,6 @@
 					onComplete: function (form) {
 						submitData(form, $(form).serializeArray()); //callback function is called.
 					}
-				},
-				validatorMessages: {
-					required: "Please don't keep the field empty.", //setting different message
-					validEmail: "Please enter valid email."  //adding new validator Message
 				}
 			});
 		});
@@ -45,25 +41,6 @@
 		function submitData(form, data) {
 			console.log('Submit Data function is called..');
 		}
-
-		//Additional Function
-		jQuery.validator.addMethod("validEmail", function (value, element) {
-			if (value == '')
-				return true;
-			var temp1;
-			temp1 = true;
-			var ind = value.indexOf('@');
-			var str2 = value.substr(ind + 1);
-			var str3 = str2.substr(0, str2.indexOf('.'));
-			if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
-				return false;
-			var str1 = value.substr(0, ind);
-			if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
-				return false;
-			str = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
-			temp1 = str.test(value);
-			return temp1;
-		});
 	</script>
 </head>
 
@@ -75,8 +52,7 @@
 				<form action="" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 					<div class="form-group">
 						<label for="email">Email address:</label>
-						<input type="text" class="form-control" id="email" name="email" required="true"
-							validEmail="true" />
+						<input type="email" class="form-control" id="email" name="email" required="true" />
 					</div>
 					<div class="form-group">
 						<label for="username">Username:</label>
