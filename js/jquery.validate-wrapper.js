@@ -5,17 +5,25 @@
 
 	//Default Parameters
 	var pluginName = "validateWrapper",
-		defaults = {
-			ignore        : ":hidden:not(.hidden-required), .ignore-validate",
-			errorClass    : 'error',
-			errorElement  : 'div',
-			validClass    : 'valid',
-			focusInvalid  : false,
-			highlight     : null,
-			unhighlight   : null,
-			invalidHandler: null,
-			errorPlacement: null,
-			onComplete    : null,
+	    defaults   = {
+			variables: { //default variables.
+				ignore      : ":hidden:not(.hidden-required), .ignore-validate",
+				errorClass  : 'error',
+				errorElement: 'div',
+				validClass  : 'valid',
+				focusInvalid: false
+			},
+			methods: { //default methods
+				highlight     : null,
+				unhighlight   : null,
+				invalidHandler: null,
+				errorPlacement: null,
+				onComplete    : null,   //callback function called in submitHandler
+			},
+			validatorMessages: { //JQuery validator default messages
+				require_from_group: jQuery.validator.format("Please fill out all {0} fields."),
+			}
+
 		};
 
 	// Plugin constructor
@@ -30,29 +38,45 @@
 	// Avoid Plugin.prototype conflicts
 	$.extend(Plugin.prototype, {
 		_initialize: function () {
-			this._validate();
+			this._validate(); //validate Function
+			this._additionMethod(); //additional methods
 		},
 		_validate: function () {
 			var plugin = this;
+			//jquery.valdate Function
 			$(this.element).validate({
-				ignore        : this.settings.ignore,
-				errorClass    : this.settings.errorClass,
-				errorElement  : this.settings.errorElement,
-				validClass    : this.settings.validClass,
-				focusInvalid  : this.settings.focusInvalid,
-				highlight     : ($.isFunction(this.settings.highlight)) 		? this.settings.highlight          : this._highlight,
-				unhighlight   : ($.isFunction(this.settings.unhighlight)) 		? this.settings.unhighlight      : this._unHighlight,
-				invalidHandler: ($.isFunction(this.settings.invalidHandler)) 	? this.settings.invalidHandler: this._inValidHandler,
-				errorPlacement: ($.isFunction(this.settings.errorPlacement)) 	? this.settings.errorPlacement: this._errorPlacement,
+				ignore        : this.settings.variables.ignore,
+				errorClass    : this.settings.variables.errorClass,
+				errorElement  : this.settings.variables.errorElement,
+				validClass    : this.settings.variables.validClass,
+				focusInvalid  : this.settings.variables.focusInvalid,
+				highlight     : ($.isFunction(this.settings.methods.highlight)) ? this.settings.methods.highlight          : this._highlight,
+				unhighlight   : ($.isFunction(this.settings.methods.unhighlight)) ? this.settings.methods.unhighlight      : this._unHighlight,
+				invalidHandler: ($.isFunction(this.settings.methods.invalidHandler)) ? this.settings.methods.invalidHandler: this._inValidHandler,
+				errorPlacement: ($.isFunction(this.settings.methods.errorPlacement)) ? this.settings.methods.errorPlacement: this._errorPlacement,
 				submitHandler : function (form) {
 					plugin._callback(form);
 				},
 			});
-			this._additionMethod();
 		},
-		_additionMethod: function() {
-			console.log('additionalMethod');
+		_additionMethod: function () {
+			//Default validator messages
+			jQuery.extend(jQuery.validator.messages, this.settings.validatorMessages);
+
+			//Rule to set group validation
+			jQuery.validator.addClassRules('group-all-together', {
+				'require_from_group': [jQuery('.group-all-together').length, '.group-all-together']
+			});
+
 		},
+		_callback: function (form) { //Callback Function for Jquery.validate
+			var onComplete = this.settings.methods.onComplete;
+			if ($.isFunction(onComplete))
+				onComplete(form);
+			else
+				console.log('Default callback function is called..');
+		},
+		//Jquery Validator Function default definition
 		_highlight: function (element, errorClass, validClass) {
 			jQuery(element).addClass(errorClass).removeClass(validClass);
 		},
@@ -73,19 +97,12 @@
 				error.insertAfter(element.parent());
 			else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 				element.closest('.form-check').parent().append(error);
-			else if (element.hasClass('groupTogether')) {
-				var lastElement = $('.groupTogether:last');
+			else if (element.hasClass('group-all-together')) {
+				var lastElement = $('.group-all-together:last');
 				if ($(element).attr('name') == $(lastElement).attr('name'))
-					error.insertAfter(lastElement.parent());
+					error.insertAfter(lastElement.parent().parent());
 			} else
 				error.insertAfter(element);
-		},
-		_callback: function (form) {
-			var onComplete = this.settings.onComplete;
-			if (typeof onComplete === 'function') {
-				onComplete(form);
-			} else
-				console.log('default callback function got executed');
 		}
 	});
 
