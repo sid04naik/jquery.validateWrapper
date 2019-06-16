@@ -3,13 +3,121 @@
 
 <head>
 	<title>JQuery Validate Wrapper</title>
-	<meta   charset = "utf-8">
-	<meta   name    = "viewport" content = "width=device-width, initial-scale=1">
-	<script src     = "js/jquery-3.4.1.min.js"> </script>
-	<script src     = "js/jquery.validate-wrapper.js"> </script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
+	<script src="js/jquery.validate-wrapper.js"> </script>
+	<script>
+		$.fn.serializeObject = function () {
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function () {
+				if (o[this.name] !== undefined) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+			return o;
+		};
+
+		function serializeObject(form) {
+			var o = {};
+			var formObj = form;
+			var a = formObj.serializeArray();
+			$.each(a, function () {
+				if (o[formObj.name] !== undefined) {
+					if (!o[formObj.name].push) {
+						o[formObj.name] = [o[formObj.name]];
+					}
+					o[formObj.name].push(formObj.value || '');
+				} else {
+					o[formObj.name] = formObj.value || '';
+				}
+			});
+			return o;
+		}
+
+		$(function () {
+			$('form').validateWrapper({
+				onComplete: function (form) {
+					window['submitData'](form, $(form).serializeObject());
+				}
+			});
+		});
+
+		//here my
+		function submitData(form, data) {
+			console.log(form);
+			console.log(data);
+		}
+	</script>
 </head>
 
 <body>
+	<div class="container">
+		<div class="clearfix" style="height:30px;"></div>
+		<div class="card">
+			<div class="card-body">
+				<form action="" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
+					<div class="form-group">
+						<label for="email">Email address:</label>
+						<input type="text" class="form-control" id="email" name="email" required="true" validEmail="true" />
+					</div>
+					<div class="form-group">
+						<label for="username">Username:</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">@</span>
+							</div>
+							<input type="text" class="form-control" id="username" name="username" required="true" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="username">Password:</label>
+						<input type="password" class="form-control" id="username" name="password" required="true" />
+					</div>
+					<div class="form-group">
+						<label for="cpassword">Confirm Password:</label>
+						<input type="password" class="form-control" id="cpassword" name="cpassword" required="true" />
+					</div>
+					<div class="form-group">
+						<label for="address">Address:</label>
+						<textarea class="form-control" id="address" name="address" required="true"></textarea>
+					</div>
+					<div class="form-group">
+						<div class="check-groups">
+							<label for="gender">Gender:</label>
+							<div class="form-check form-check-inline ">
+								<input class="form-check-input" type="radio" name="gender" id="gender_male" value="Male"
+									required="true" /> Male
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="gender" id="gender_female"
+									value="Female" required="true" /> Female
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="form-check">
+							<input class="form-check-input " type="checkbox" name="terms_and_conditions"
+								id="terms_and_conditions" required="true"> Accept terms and conditions
+						</label>
+					</div>
+					<button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>
