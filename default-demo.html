@@ -29,10 +29,8 @@
 	<script>
 		$(function () {
 			$('form').validateWrapper({
-				methods: {
-					onComplete: function (form) {
-						submitData(form, $(form).serializeArray()); //callback function is called.
-					}
+				onComplete: function (form) {
+					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
 			});
 		});
