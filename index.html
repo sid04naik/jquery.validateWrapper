@@ -7,17 +7,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 	<style>
-		form input[type="text"].error,
-		form textarea.error,
-		form select.error,
-		form input[type="password"].error,
-		form input[type="email"].error,
-		form input[type="number"].error {
+		form input[type="text"].error-fld,
+		form textarea.error-fld,
+		form select.error-fld,
+		form input[type="password"].error-fld,
+		form input[type="email"].error-fld,
+		form input[type="number"].error-fld {
 			border: 1px solid #d7244c;
 			background-color: #ffffff;
 			color: #d7244c;
 		}
-		.error {
+		.error-fld {
 			color: #d7244c;
 		}
 	</style>
@@ -29,10 +29,40 @@
 	<script>
 		$(function () {
 			$('form').validateWrapper({
-				methods: {
-					onComplete: function (form) {
-						submitData(form, $(form).serializeArray()); //callback function is called.
-					}
+				ignore           : ":hidden:not(.hidden-required), .ignore-validate",
+				errorClass       : 'error-fld',
+				errorElement     : 'p',
+				validClass       : 'valid-fld',
+				focusInvalid     : false,
+				highlight        : function (element, errorClass, validClass) {
+					jQuery(element).addClass(errorClass).removeClass(validClass);
+				},
+				unhighlight      : function (element, errorClass, validClass) {
+					jQuery(element).removeClass(errorClass).addClass(validClass);
+				},
+				invalidHandler   : function (form, validator) {
+					if (!validator.numberOfInvalids())
+						return;
+					$('html, body').animate({
+						scrollTop: ($(validator.errorList[0].element)).offset().top - 100
+					}, 100);
+				},
+				errorPlacement   : function (error, element) {
+					if (element.attr('hide-validation-message') == 'true')
+						return true;
+					else if (element.next().hasClass('input-group-append') || element.prev().hasClass('input-group-prepend') || element.hasClass('append-msg-to-parent'))
+						error.insertAfter(element.parent());
+					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
+						element.closest('.form-check').parent().append(error);
+					else if (element.hasClass('group-all-together')) {
+						var lastElement = $('.group-all-together:last');
+						if ($(element).attr('name') == $(lastElement).attr('name'))
+							error.insertAfter(lastElement.parent().parent());
+					} else
+						error.insertAfter(element);
+				},
+				onComplete		 : function (form) {
+					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
 				validatorMessages: {
 					required: "Please don't keep the field empty.", //setting different message
