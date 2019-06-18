@@ -9,8 +9,8 @@ Below is the documentation please follow then to get started with Jquery.validat
 
 ---
 ## Demo URL's
-[Demo with Default Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/default-demo.html)
-[Demo with all valid Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/demo-with-params.html)
+*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/default-demo.html)
+*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/demo-with-params.html)
 
 ## Prerequisites
 *   JQuery.
@@ -34,7 +34,38 @@ Below is the documentation please follow then to get started with Jquery.validat
 $('form').validateWrapper();
 ```
 Note: Selector should be always reference to a form element.
-*  Adding a custom settings
+*  Adding user defined settings.
+You can add your own settings by simply specifying then as given below.
+  1.   Setting ignore value.
+  ```js
+  $('form').validateWrapper({
+    ignore  : ":hidden:not(.hidden-required)",
+  });
+  ```
+  2.    Setting error class.
+  ```js
+  $('form').validateWrapper({
+    errorClass       : 'error-fld',
+  });
+  ```
+  3.    Setting error element.
+  ```js
+  $('form').validateWrapper({
+    errorElement     : 'p',
+  });
+  ```
+  4.    Setting valid class.
+    ```js
+  $('form').validateWrapper({
+    validClass       : 'valid-fld',
+  });
+  ```
+  5.    Setting focus invalid.
+   ```js
+  $('form').validateWrapper({
+    focusInvalid     : false,
+  });
+  ```
 
 
 ---
