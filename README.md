@@ -8,10 +8,6 @@ This will help the developers to maintain a single file for all the form. It wil
 Below is the documentation please follow them to get started with Jquery.validate-wrapper.
 
 ---
-## Demo URL's
-*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/default-demo.html)
-*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/demo-with-params.html)
-
 ## Prerequisites
 *   JQuery.
 *   JQuery Validate Plugin.
@@ -24,19 +20,20 @@ Below is the documentation please follow them to get started with Jquery.validat
 ```
 
 ## Documentation
-*   Download Jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.vallidate-wrapper)
-*   load the Jquery
+*   Download jquery.validate-wrapper Plugin by clicking on [Download Plugin].(https://github.com/sid04naik/jquery.vallidate-wrapper)
+*   load the jquery.validate-wrapper.
 ```js
-<script src="js/jquery.validate-wrapper.min.js"> </script>
+<script src="js/jquery.validate-wrapper.min.js"> </script> //minified
+<script src="js/jquery.validate-wrapper.js"> </script> //non minified
 ```
-*   Initializing the pluign with default Settings
+*   Initializing the pluign with default Settings.
 ```js
 $('form').validateWrapper();
 ```
 Note: Selector should be always reference to a form element.
 *  Adding user defined settings.
 You can add your own settings by simply specifying then as given below.
-1.   Setting "ignore" value.
+1.   Setting "ignore" values.
 ```js
 $('form').validateWrapper({
   ignore  : ":hidden:not(.hidden-required)",
@@ -111,8 +108,8 @@ $('form').validateWrapper({
 $('form').validateWrapper({
   validatorMessages: {
     required: "Please don't keep the field empty.", //modifying the message.
-		validEmail: "Please enter valid email."  //adding new validator Message for custom validarion method.
-	},
+    validEmail: "Please enter valid email."  //adding new validator Message for custom validarion method.
+  },
 });
 ```
 Note: You can define custom validation using *jQuery.validator.addMethod* anywhere in your code.
@@ -121,3 +118,7 @@ jQuery.validator.addMethod("validEmail", function (value, element) {
   //Your logic comes here.
 });
 ```
+
+## Demo URL's
+*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/default-demo.html)
+*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/demo-with-params.html)
