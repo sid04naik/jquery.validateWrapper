@@ -20,7 +20,7 @@ Below is the documentation please follow them to get started with Jquery.validat
 ```
 
 ## Documentation
-* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin].(https://github.com/sid04naik/jquery.vallidate-wrapper)
+* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.vallidate-wrapper).
 * Load the jquery.validate-wrapper.
 ```js
 <script src="js/jquery.validate-wrapper.min.js"> </script> //minified
