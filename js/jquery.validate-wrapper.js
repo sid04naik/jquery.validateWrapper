@@ -25,7 +25,9 @@
 	// Plugin constructor
 	function Plugin(element, options) {
 		this.element           = element;
-		this.settings          = $.extend({}, defaults, options); delete this.settings.validatorMessages;  //removing validator messages from settings
+		this.settings          = $.extend({}, defaults, options);
+		delete this.settings.validatorMessages;  //removing validator messages from settings
+		if(options.validatorMessages && typeof options.validatorMessages != "object") delete options.validatorMessages;
 		this.validatorMessages = $.extend({}, defaults.validatorMessages, options.validatorMessages);      //extending validators messages
 		this._defaults         = defaults;
 		this._name             = pluginName;
@@ -59,7 +61,6 @@
 		_additionMethod: function () {
 			//Default validator messages
 			jQuery.extend(jQuery.validator.messages, this.validatorMessages);
-
 			//Rule to set group validation
 			jQuery.validator.addClassRules('group-all-together', {
 				'require_from_group': [jQuery('.group-all-together').length, '.group-all-together']
