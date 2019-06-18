@@ -1,4 +1,4 @@
-# jquery.vallidate-wrapper
+# jquery.validate-wrapper
 
 This wrapper plugin will run above the **JQuery Validation Plugin**.
 
@@ -108,7 +108,7 @@ $('form').validateWrapper({
 $('form').validateWrapper({
 	validatorMessages: {
 		required: "Please don't keep the field empty.", //modifying the message.
-    		validEmail: "Please enter valid email."  //adding new validator Message for custom validarion method.
+    		validEmail: "Please enter valid email."  //adding new validator Message for custom validation method.
   	},
 });
 ```
