@@ -2,10 +2,10 @@
 
 This wrapper plugin will run above the **JQuery Validation Plugin**.
 
-Basically, the wrapper plugin will help you to validate form elements with adding much line of a code. Just use the form selector and call the wrapper plugin and the form will start validating. 
+Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating. 
 This will help the developers to maintain a single file for all the form. It will also help the developers in terms of code redundancy, latency, and many other aspects.
 
-Below is the documentation please follow then to get started with Jquery.validate-wrapper.
+Below is the documentation please follow them to get started with Jquery.validate-wrapper.
 
 ---
 ## Demo URL's
@@ -36,7 +36,7 @@ $('form').validateWrapper();
 Note: Selector should be always reference to a form element.
 *  Adding user defined settings.
 You can add your own settings by simply specifying then as given below.
-1.   Setting ignore value.
+1.   Setting "ignore" value.
 ```js
 $('form').validateWrapper({
   ignore  : ":hidden:not(.hidden-required)",
@@ -45,150 +45,79 @@ $('form').validateWrapper({
 2.    Setting error class.
 ```js
 $('form').validateWrapper({
-  errorClass       : 'error-fld',
+  errorClass  : 'error-fld',
 });
 ```
 3.    Setting error element.
 ```js
 $('form').validateWrapper({
-  errorElement     : 'p',
+  errorElement  : 'p',
 });
 ```
 4.    Setting valid class.
   ```js
 $('form').validateWrapper({
-  validClass       : 'valid-fld',
+  validClass  : 'valid-fld',
 });
 ```
 5.    Setting focus invalid.
 ```js
 $('form').validateWrapper({
-  focusInvalid     : false,
+  focusInvalid  : false,
 });
 ```
-
-
----
-layout: default
----
-
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](./another-page.html).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
+6.    Field highlighting settings.
 ```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
+$('form').validateWrapper({
+  highlight : function (element, errorClass, validClass) {
+				//Your logic comes here.
+	},
+});
 ```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
+7.    Field unhighlighting settings.
+```js
+$('form').validateWrapper({
+  unhighlight : function (element, errorClass, validClass) {
+    //Your logic comes here.
+  },
+});
 ```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
+8.    Invalid field handling settings.
+```js
+$('form').validateWrapper({
+  invalidHandler  : function (form, validator) {
+    //Your logic comes here.
+  },
+});
 ```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
+9.    Error message placement settings.
+```js
+$('form').validateWrapper({
+  errorPlacement  : function (error, element) {
+    //Your logic comes here.
+  },
+});
 ```
-
+10.   Callback function called in SubmitHandler.
+```js
+$('form').validateWrapper({
+  onComplete  : function (form) {
+	  //Your logic comes here.
+	},
+});
 ```
-The final element.
+*   Adding and modifying validator messages.
+```js
+$('form').validateWrapper({
+  validatorMessages: {
+    required: "Please don't keep the field empty.", //modifying the message.
+		validEmail: "Please enter valid email."  //adding new validator Message for custom validarion method.
+	},
+});
 ```
-
+Note: You can define custom validation using *jQuery.validator.addMethod* anywhere in your code.
+```js
+jQuery.validator.addMethod("validEmail", function (value, element) {
+  //Your logic comes here.
+});
+```
