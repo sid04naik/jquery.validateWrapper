@@ -19,8 +19,8 @@ Below is the documentation please follow them to get started with Jquery.validat
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 ```
 
-## [Documentation](https://sid04naik.github.io/jquery.vallidate-wrapper/)
-* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.vallidate-wrapper).
+## [Documentation](https://sid04naik.github.io/jquery.validate-wrapper/)
+* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper).
 * Load the jquery.validate-wrapper.
 ```js
 <script src="js/jquery.validate-wrapper.min.js"> </script> //minified
@@ -120,5 +120,5 @@ jQuery.validator.addMethod("validEmail", function (value, element) {
 ```
 
 ## Demo URL's
-*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/default-demo.html)
-*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.vallidate-wrapper/demo-with-params.html)
+*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validate-wrapper/default-demo.html)
+*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo-with-params.html)
