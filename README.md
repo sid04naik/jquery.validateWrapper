@@ -1,6 +1,6 @@
 # jquery.validate-wrapper
 
-This wrapper plugin will run above the **JQuery Validation Plugin**.
+This wrapper plugin will run above the **[JQuery Validation Plugin](https://jqueryvalidation.org/)**.
 
 Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating. 
 This will help the developers to maintain a single file for all the form. It will also help the developers in terms of code redundancy, latency, and many other aspects.
