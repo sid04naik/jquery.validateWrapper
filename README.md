@@ -36,36 +36,36 @@ $('form').validateWrapper();
 Note: Selector should be always reference to a form element.
 *  Adding user defined settings.
 You can add your own settings by simply specifying then as given below.
-  1.   Setting ignore value.
+1.   Setting ignore value.
+```js
+$('form').validateWrapper({
+  ignore  : ":hidden:not(.hidden-required)",
+});
+```
+2.    Setting error class.
+```js
+$('form').validateWrapper({
+  errorClass       : 'error-fld',
+});
+```
+3.    Setting error element.
+```js
+$('form').validateWrapper({
+  errorElement     : 'p',
+});
+```
+4.    Setting valid class.
   ```js
-  $('form').validateWrapper({
-    ignore  : ":hidden:not(.hidden-required)",
-  });
-  ```
-  2.    Setting error class.
-  ```js
-  $('form').validateWrapper({
-    errorClass       : 'error-fld',
-  });
-  ```
-  3.    Setting error element.
-  ```js
-  $('form').validateWrapper({
-    errorElement     : 'p',
-  });
-  ```
-  4.    Setting valid class.
-    ```js
-  $('form').validateWrapper({
-    validClass       : 'valid-fld',
-  });
-  ```
-  5.    Setting focus invalid.
-   ```js
-  $('form').validateWrapper({
-    focusInvalid     : false,
-  });
-  ```
+$('form').validateWrapper({
+  validClass       : 'valid-fld',
+});
+```
+5.    Setting focus invalid.
+```js
+$('form').validateWrapper({
+  focusInvalid     : false,
+});
+```
 
 
 ---
