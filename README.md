@@ -19,7 +19,7 @@ Below is the documentation please follow them to get started with Jquery.validat
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 ```
 
-## Documentation
+## [Documentation](https://sid04naik.github.io/jquery.vallidate-wrapper/)
 * Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.vallidate-wrapper).
 * Load the jquery.validate-wrapper.
 ```js
