@@ -132,7 +132,7 @@ $('form').validateWrapper({
 $('form').validateWrapper({
 	validatorMessages: {
 		required	: "Please don't keep the field empty.", //modifying the message.
-    	valid_email : "Please enter valid email."  //adding new validator Message for custom validation method.
+    		valid_email : "Please enter valid email."  //adding new validator Message for custom validation method.
   	},
 });
 ```
