@@ -92,7 +92,7 @@ $('form').validateWrapper({
 ```js
 $('form').validateWrapper({
 	unhighlight : function (element, errorClass, validClass) {
-    //Your logic comes here.
+    	//Your logic comes here.
   	},
 });
 ```
@@ -102,7 +102,7 @@ $('form').validateWrapper({
 ```js
 $('form').validateWrapper({
 	invalidHandler  : function (form, validator) {
-    //Your logic comes here.
+    	//Your logic comes here.
   	},
 });
 ```
@@ -112,7 +112,7 @@ $('form').validateWrapper({
 ```js
 $('form').validateWrapper({
 	errorPlacement  : function (error, element) {
-    //Your logic comes here.
+    	//Your logic comes here.
   	},
 });
 ```
@@ -132,7 +132,7 @@ $('form').validateWrapper({
 $('form').validateWrapper({
 	validatorMessages: {
 		required	: "Please don't keep the field empty.", //modifying the message.
-    		valid_email : "Please enter valid email."  //adding new validator Message for custom validation method.
+    		valid_email 	: "Please enter valid email."  //adding new validator Message for custom validation method.
   	},
 });
 ```
