@@ -14,12 +14,17 @@
 		form input[type="password"].error,
 		form input[type="email"].error,
 		form input[type="number"].error {
-			border: 1px solid #d7244c;
+			border          : 1px solid #d7244c;
 			background-color: #ffffff;
-			color: #d7244c;
+			color           : #d7244c;
 		}
+
 		.error {
 			color: #d7244c;
+		}
+
+		.success {
+			border: 1px solid #90EE90;
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -30,6 +35,10 @@
 	<script>
 		$(function () {
 			$('form').validateWrapper({
+				validateGroup: {
+					nameGroup: "first_name last_name"
+				},
+
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
@@ -51,7 +60,21 @@
 				<form action="" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 					<div class="form-group">
 						<label for="email">Email address:</label>
-						<input type="email" class="form-control" id="email" name="email" required="true" />
+						<input type="email" class="form-control " id="email" name="email" required="true" />
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<div class="col">
+								<label for="first_name">First Name:</label>
+								<input type="text" class="form-control nameGroup group-in-one" id="first_name"
+									name="first_name" required="true" />
+							</div>
+							<div class="col">
+								<label for="last_name">Last Name:</label>
+								<input type="text" class="form-control nameGroup group-in-one" id="last_name"
+									name="last_name" required="true" />
+							</div>
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="username">Username:</label>
@@ -59,7 +82,8 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text">@</span>
 							</div>
-							<input type="text" class="form-control" id="username" name="username" required="true" />
+							<input type="text" class="form-control" hide-validation-message=true id="username"
+								name="username" required="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -67,9 +91,9 @@
 						<input type="password" class="form-control" id="password" name="password" required="true" />
 					</div>
 					<div class="form-group">
-						<label for="cpassword">Confirm Password:</label>
-						<input type="password" class="form-control" id="cpassword" name="cpassword" required="true"
-							equalTo="#password" />
+						<label for="confirm_password">Confirm Password:</label>
+						<input type="password" class="form-control" id="confirm_password" name="confirm_password"
+							required="true" equalTo="#password" />
 					</div>
 					<div class="form-group">
 						<label for="address">Address:</label>

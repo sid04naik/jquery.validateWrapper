@@ -14,12 +14,17 @@
 		form input[type="password"].error-fld,
 		form input[type="email"].error-fld,
 		form input[type="number"].error-fld {
-			border: 1px solid #d7244c;
+			border          : 1px solid #d7244c;
 			background-color: #ffffff;
-			color: #d7244c;
+			color           : #d7244c;
 		}
+
 		.error-fld {
 			color: #d7244c;
+		}
+
+		.valid-fld {
+			border: 1px solid #90EE90;
 		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -30,28 +35,31 @@
 	<script>
 		$(function () {
 			$('form').validateWrapper({
-				ignore           : ":hidden:not(.hidden-required), .ignore-validate",
-				errorClass       : 'error-fld',
-				errorElement     : 'p',
-				validClass       : 'valid-fld',
-				focusInvalid     : false,
-				highlight        : function (element, errorClass, validClass) {
+				ignore      : ":hidden:not(.hidden-required), .ignore, .ignore-validate",
+				errorClass  : 'error-fld',
+				errorElement: 'p',
+				validClass  : 'valid-fld',
+				focusInvalid: false,
+				highlight   : function (element, errorClass, validClass) {
 					jQuery(element).addClass(errorClass).removeClass(validClass);
 				},
-				unhighlight      : function (element, errorClass, validClass) {
+				unhighlight: function (element, errorClass, validClass) {
 					jQuery(element).removeClass(errorClass).addClass(validClass);
 				},
-				invalidHandler   : function (form, validator) {
+				invalidHandler: function (form, validator) {
 					if (!validator.numberOfInvalids())
 						return;
 					$('html, body').animate({
 						scrollTop: ($(validator.errorList[0].element)).offset().top - 100
 					}, 100);
 				},
-				errorPlacement   : function (error, element) {
+				errorPlacement: function (error, element) {
 					if (element.attr('hide-validation-message') == 'true')
 						return true;
-					else if (element.next().hasClass('input-group-append') || element.prev().hasClass('input-group-prepend') || element.hasClass('append-msg-to-parent'))
+					else if (element.next().hasClass('input-group-append') ||
+						element.prev().hasClass('input-group-prepend') ||
+						element.hasClass('append-msg-to-parent')
+					)
 						error.insertAfter(element.parent());
 					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 						element.closest('.form-check').parent().append(error);
@@ -59,15 +67,25 @@
 						var lastElement = $('.group-all-together:last');
 						if ($(element).attr('name') == $(lastElement).attr('name'))
 							error.insertAfter(lastElement.parent().parent());
+					} else if (element.hasClass('group-in-one')) {
+						for (var key in plugin._validateGroup) {
+							if (element.hasClass(key)) {
+								var lastEl = $('.' + key + ':last');
+								error.insertAfter(lastEl.parent().parent());
+							}
+						}
 					} else
 						error.insertAfter(element);
 				},
-				onComplete		 : function (form) {
+				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
+				validateGroup: {
+					nameGroup: "first_name last_name"
+				},
 				validatorMessages: {
-					required: "Please don't keep the field empty.", //setting different message
-					validEmail: "Please enter valid email."  //adding new validator Message
+					required   : "Please don't keep the field empty.",   //setting different message
+					valid_email: "Please enter valid email."             //adding new validator Message
 				}
 			});
 		});
@@ -78,14 +96,14 @@
 		}
 
 		//Additional Function
-		jQuery.validator.addMethod("validEmail", function (value, element) {
+		jQuery.validator.addMethod("valid_email", function (value, element) {
 			if (value == '')
 				return true;
 			var temp1;
-			temp1 = true;
-			var ind = value.indexOf('@');
-			var str2 = value.substr(ind + 1);
-			var str3 = str2.substr(0, str2.indexOf('.'));
+			    temp1 = true;
+			var ind   = value.indexOf('@');
+			var str2  = value.substr(ind + 1);
+			var str3  = str2.substr(0, str2.indexOf('.'));
 			if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
 				return false;
 			var str1 = value.substr(0, ind);
