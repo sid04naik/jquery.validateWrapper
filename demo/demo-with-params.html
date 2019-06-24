@@ -63,11 +63,11 @@
 						error.insertAfter(element.parent());
 					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 						element.closest('.form-check').parent().append(error);
-					else if (element.hasClass('group-all-together')) {
-						var lastElement = $('.group-all-together:last');
+					else if (element.hasClass('required-from-group')) {
+						var lastElement = $('.dobRequiredGroup:last');
 						if ($(element).attr('name') == $(lastElement).attr('name'))
 							error.insertAfter(lastElement.parent().parent());
-					} else if (element.hasClass('nameGroup')) {
+					} else if (element.hasClass('group-in-one')) {
 						var lastEl = $('.nameGroup:last');
 						error.insertAfter(lastEl.parent().parent());
 					} else
@@ -76,12 +76,16 @@
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
-				validateGroup: {
-					nameGroup: "first_name last_name"
+				groups: {
+					nameGroup: "first_name last_name",
 				},
-				validatorMessages: {
+				messages: {
+					nameGroup: "Please Enter Full Name",
 					required   : "Please don't keep the field empty.",   //setting different message
 					valid_email: "Please enter valid email."             //adding new validator Message
+				},
+				require_from_group:{
+					dobRequiredGroup : 2,
 				}
 			});
 		});
@@ -147,12 +151,16 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="age">Age:</label>
+						<input type="number" class="form-control" id="age" name="age" required="true" step="5" />
+					</div>
+					<div class="form-group">
 						<label for="username">Password:</label>
 						<input type="password" class="form-control" id="password" name="password" required="true" />
 					</div>
 					<div class="form-group">
-						<label for="cpassword">Confirm Password:</label>
-						<input type="password" class="form-control" id="cpassword" name="cpassword" required="true"
+						<label for="confirm_password">Confirm Password:</label>
+						<input type="password" class="form-control" id="confirm_password" name="confirm_password" required="true"
 							equalTo="#password" />
 					</div>
 					<div class="form-group">
@@ -164,7 +172,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Day</label>
-								<select class="form-control group-all-together" name="day" name="day">
+								<select class="form-control dobRequiredGroup required-from-group" name="day" name="day">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -176,7 +184,7 @@
 							</div>
 							<div class="col">
 								<label>Month</label>
-								<select class="form-control group-all-together" name="month" name="month">
+								<select class="form-control dobRequiredGroup required-from-group" name="month" name="month">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -188,7 +196,7 @@
 							</div>
 							<div class="col">
 								<label>Year</label>
-								<select class="form-control group-all-together" name="year" name="year">
+								<select class="form-control dobRequiredGroup required-from-group" name="year" name="year">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;

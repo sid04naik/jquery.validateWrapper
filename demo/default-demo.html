@@ -31,14 +31,19 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validate-wrapper.min.js"> </script>
+	<script src="../jquery.validate-wrapper.js"> </script>
 	<script>
 		$(function () {
 			$('form').validateWrapper({
-				validateGroup: {
-					nameGroup: "first_name last_name"
+				groups: {
+					nameGroup: "first_name last_name",
 				},
-
+				messages: {
+					nameGroup: "Please Enter Full Name"
+				},
+				require_from_group:{
+					dobRequiredGroup : 2,
+				},
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
@@ -82,9 +87,12 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text">@</span>
 							</div>
-							<input type="text" class="form-control" hide-validation-message=true id="username"
-								name="username" required="true" />
+							<input type="text" class="form-control " hide-validation-message="true" id="username" name="username" required="true" />
 						</div>
+					</div>
+					<div class="form-group">
+						<label for="age">Age:</label>
+						<input type="number" class="form-control" id="age" name="age" required="true" step="5" />
 					</div>
 					<div class="form-group">
 						<label for="username">Password:</label>
@@ -104,7 +112,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Day</label>
-								<select class="form-control group-all-together" name="day" name="day">
+								<select class="form-control dobRequiredGroup required-from-group" name="day" >
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -116,7 +124,7 @@
 							</div>
 							<div class="col">
 								<label>Month</label>
-								<select class="form-control group-all-together" name="month" name="month">
+								<select class="form-control dobRequiredGroup required-from-group" name="month" >
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -128,7 +136,7 @@
 							</div>
 							<div class="col">
 								<label>Year</label>
-								<select class="form-control group-all-together" name="year" name="year">
+								<select class="form-control dobRequiredGroup required-from-group" name="year" >
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
