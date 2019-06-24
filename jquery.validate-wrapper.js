@@ -26,8 +26,8 @@
 
 		if (options.groups && typeof options.groups != "object") delete options.groups;
 
-		this._messages     = $.extend({}, this._defaults.messages, options.messages);
-		this._groups         = $.extend({}, this._defaults.groups, options.groups);
+		this._messages           = $.extend({}, this._defaults.messages, options.messages);
+		this._groups             = $.extend({}, this._defaults.groups, options.groups);
 		this._require_from_group = $.extend({}, this._defaults.require_from_group, options.require_from_group);
 
 		this._init();
