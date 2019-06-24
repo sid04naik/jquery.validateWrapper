@@ -69,15 +69,8 @@ $('form').validateWrapper({
 });
 ```
 
-5. Setting `focusInvalid`.
 
-```js
-$('form').validateWrapper({
-	focusInvalid  : false,
-});
-```
-
-6. Field highlighting settings.
+5. Field highlighting settings.
 
 ```js
 $('form').validateWrapper({
@@ -87,7 +80,7 @@ $('form').validateWrapper({
 });
 ```
 
-7. Field unhighlighting settings.
+6. Field unhighlighting settings.
 
 ```js
 $('form').validateWrapper({
@@ -97,7 +90,7 @@ $('form').validateWrapper({
 });
 ```
 
-8. Invalid field handling settings.
+7. Invalid field handling settings.
 
 ```js
 $('form').validateWrapper({
@@ -107,7 +100,7 @@ $('form').validateWrapper({
 });
 ```
 
-9. Error message placement settings.
+8. Error message placement settings.
 
 ```js
 $('form').validateWrapper({
@@ -117,7 +110,8 @@ $('form').validateWrapper({
 });
 ```
 
-10. Callback function called in SubmitHandler.
+9. Callback function called in SubmitHandler.
+    
 ```js
 $('form').validateWrapper({
 	onComplete  : function (form) {
@@ -130,9 +124,9 @@ $('form').validateWrapper({
 
 ```js
 $('form').validateWrapper({
-	validatorMessages: {
+	messages: {
 		required	: "Please don't keep the field empty.", //modifying the message.
-    		valid_email 	: "Please enter valid email."  //adding new validator Message for custom validation method.
+    	valid_email : "Please enter valid email."  //adding new validator Message for custom validation method.
   	},
 });
 ```
@@ -145,6 +139,69 @@ jQuery.validator.addMethod("valid_email", function (value, element) {
 });
 ```
 
+* Hiding error messages for some fields.
+Just add  `hide-validation-message = true` as a attribute for the element.
+
+```html
+<input type="text" class="form-control" hide-validation-message=true id="username" name="username" required="true" />
+```
+
+* Adding group validation and settings message to the group.
+1. Group the fields together.
+   
+```js
+$('form').validateWrapper({
+	groups: {
+		nameGroup: "first_name last_name" //nameGroup is a groupName
+	}
+});
+```
+2. Set the "groupName" as the class name for the fields. Also add `group-in-one` class for the field.
+
+```html
+<input type="text" class="form-control nameGroup group-in-one" id="first_name" name="first_name" required="true" />
+<input type="text" class="form-control nameGroup group-in-one" id="last_name" name="last_name" required="true" />
+```
+
+3. To set different message for the group.
+
+```js
+$('form').validateWrapper({
+	messages: {
+		nameGroup: "Please enter full name"
+	}
+});
+```
+
+* Add `require_from_group` validation
+`require_from_group` ensures a given number of fields in a group are complete.
+1. You just have to add class `require_from_group` for the element and add a `group_class`.
+
+```html
+<!-- 
+dobRequiredGroup is set as group class for these fields. you can have multiple group_classes
+-->
+<select class="form-control dobRequiredGroup require_from_group" name="day" >
+	<option value="">--Please Select--</option>
+</select>
+<select class="form-control dobRequiredGroup require_from_group" name="month" >
+	<option value="">--Please Select--</option>
+</select>
+<select class="form-control dobRequiredGroup require_from_group" name="year" >
+	<option value="">--Please Select--</option>
+</select>
+```
+
+2. Add number fields to validate form the group.
+   
+```js
+$('form').validateWrapper({
+	require_from_group:{
+		dobRequiredGroup : 2,
+	},
+});
+```
+   
 ## Demo URL's
 *   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/default-demo.html)
 *   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/demo-with-params.html)
