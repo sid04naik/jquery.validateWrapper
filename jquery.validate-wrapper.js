@@ -57,11 +57,11 @@
 		//validate wrapper
 		_validate: function () {
 			let extraParams = {
-				highlight     : ($.isFunction(this._settings.highlight)) ? this._settings.highlight          : this._highlight,
-				unhighlight   : ($.isFunction(this._settings.unhighlight)) ? this._settings.unhighlight      : this._unHighlight,
-				invalidHandler: ($.isFunction(this._settings.invalidHandler)) ? this._settings.invalidHandler: this._inValidHandler,
+				highlight     : (typeof this._settings.highlight === "function") ? this._settings.highlight          : this._highlight,
+				unhighlight   : (typeof this._settings.unhighlight === "function") ? this._settings.unhighlight      : this._unHighlight,
+				invalidHandler: (typeof this._settings.invalidHandler === "function") ? this._settings.invalidHandler: this._inValidHandler,
 				groups        : (typeof this._groups === "object") ? this._groups              : null,
-				errorPlacement: ($.isFunction(this._settings.errorPlacement)) ? this._settings.errorPlacement: this._errorPlacement,
+				errorPlacement: (typeof this._settings.errorPlacement === "function") ? this._settings.errorPlacement: this._errorPlacement,
 				submitHandler : function (form) {
 					plugin._callback(form);
 				},
@@ -85,12 +85,12 @@
 
 			//Rule to set group validation
 			for (var i in this._groups) {
-				for (var k in this._messages) {
-					if (i == k) {
-						if (this._messages[k] != '') {
-							$('.' + i).each(function () {
+				for (var j in this._messages) {
+					if (i == j) {
+						if (this._messages[j] != '') {
+							$('.' + j).each(function () {
 								$("#" + this.id).rules("add", {
-									messages: { required: plugin._messages[k] }
+									messages: { required: plugin._messages[j] }
 								});
 							});
 						}
@@ -149,8 +149,8 @@
 		// Callback methods
 		_callback: function (form) {
 			var onComplete = this._settings.onComplete;
-			if ($.isFunction(onComplete))
-				onComplete.call(form);
+			if (typeof onComplete === "function")
+				onComplete(form);
 			else
 				console.log('Default callback function is called..');
 		}

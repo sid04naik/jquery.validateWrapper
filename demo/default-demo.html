@@ -31,7 +31,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validate-wrapper.js"> </script>
+	<script src="../jquery.validate-wrapper.min.js"> </script>
 	<script>
 		$(function () {
 			$('form').validateWrapper({
@@ -39,7 +39,7 @@
 					nameGroup: "first_name last_name",
 				},
 				messages: {
-					nameGroup: "Please Enter Full Name"
+					nameGroup: "Please Enter Full Name",
 				},
 				require_from_group:{
 					dobRequiredGroup : 2,
