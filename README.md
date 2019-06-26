@@ -146,7 +146,7 @@ Just add  `hide-validation-message = true` as a attribute for the element.
 <input type="text" class="form-control" hide-validation-message=true id="username" name="username" required="true" />
 ```
 
-* Adding group validation and settings message to the group.
+* Adding group validation and setting message to the group.
 1. Group the fields together.
    
 ```js
