@@ -89,9 +89,11 @@
 					if (i == j) {
 						if (this._messages[j] != '') {
 							$('.' + j).each(function () {
-								$("#" + this.id).rules("add", {
-									messages: { required: plugin._messages[j] }
-								});
+								if($("#" + this.id,plugin.$_element).length) {
+									$("#" + this.id,plugin.$_element).rules("add", {
+										messages: { required: plugin._messages[j] }
+									});
+								}
 							});
 						}
 					}
