@@ -35,25 +35,20 @@
 	<script>
 		$(function () {
 			$('form').validateWrapper({
-				groups: {
-					nameGroup: "first_name last_name",
-				},
-				messages: {
-					nameGroup: "Please Enter Full Name",
-				},
-				require_from_group:{
-					dobRequiredGroup : 2,
-				},
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
 			});
+
+		
 		});
 
 		//this is my callback function
 		function submitData(form, data) {
 			console.log('Submit Data function is called..');
 		}
+
+
 	</script>
 </head>
 
@@ -71,12 +66,12 @@
 						<div class="row">
 							<div class="col">
 								<label for="first_name">First Name:</label>
-								<input type="text" class="form-control nameGroup group-in-one" id="first_name"
+								<input type="text" class="form-control  " id="first_name"
 									name="first_name" required="true" />
 							</div>
 							<div class="col">
 								<label for="last_name">Last Name:</label>
-								<input type="text" class="form-control nameGroup group-in-one" id="last_name"
+								<input type="text" class="form-control " id="last_name"
 									name="last_name" required="true" />
 							</div>
 						</div>
@@ -87,7 +82,7 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text">@</span>
 							</div>
-							<input type="text" class="form-control " hide-validation-message="true" id="username" name="username" required="true" />
+							<input type="text" class="form-control " id="username" name="username" required="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -112,7 +107,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Day</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="day" >
+								<select class="form-control " name="day" required="true">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -124,7 +119,7 @@
 							</div>
 							<div class="col">
 								<label>Month</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="month" >
+								<select class="form-control " name="month" required="true">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -136,7 +131,7 @@
 							</div>
 							<div class="col">
 								<label>Year</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="year" >
+								<select class="form-control " name="year" required="true">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
