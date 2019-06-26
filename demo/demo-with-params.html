@@ -31,7 +31,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validate-wrapper.min.js"> </script>
+	<script src="../jquery.validate-wrapper.js"> </script>
 	<script>
 		$(function () {
 			$('form').validateWrapper({
@@ -40,6 +40,12 @@
 				errorElement: 'p',
 				validClass  : 'valid-fld',
 				focusInvalid: false,
+				groups      : {
+					nameGroup: "first_name last_name",
+				},
+				require_from_group:{
+					dobRequiredGroup : 2,
+				},
 				highlight   : function (element, errorClass, validClass) {
 					jQuery(element).addClass(errorClass).removeClass(validClass);
 				},
@@ -76,18 +82,16 @@
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
-				groups: {
-					nameGroup: "first_name last_name",
-				},
+				addToValidator: additionalMethods(),
+				// validateOnLoad: true,
 				messages: {
-					nameGroup: "Please Enter Full Name",
+					nameGroup  : "Please Enter Full Name",
 					required   : "Please don't keep the field empty.",   //setting different message
 					valid_email: "Please enter valid email."             //adding new validator Message
-				},
-				require_from_group:{
-					dobRequiredGroup : 2,
 				}
 			});
+
+		
 		});
 
 		//this is my callback function
@@ -95,24 +99,37 @@
 			console.log('Submit Data function is called..');
 		}
 
-		//Additional Function
-		jQuery.validator.addMethod("valid_email", function (value, element) {
-			if (value == '')
-				return true;
-			var temp1;
-			    temp1 = true;
-			var ind   = value.indexOf('@');
-			var str2  = value.substr(ind + 1);
-			var str3  = str2.substr(0, str2.indexOf('.'));
-			if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
-				return false;
-			var str1 = value.substr(0, ind);
-			if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
-				return false;
-			str = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
-			temp1 = str.test(value);
-			return temp1;
-		});
+		function additionalMethods(){
+			$( "input:filled" ).css( "background-color", "#bbbbff");
+			$( "input:blank" ).css( "background-color", "#D3D3D3" );
+
+			//form validation on non submit button
+			$( 'button[type="button"]' ).click(function() {
+				var form = $('form');
+				if(form.valid()) {
+					submitData(form, $(form).serializeArray());
+				}
+			});	
+
+			//Additional Function
+			jQuery.validator.addMethod("valid_email", function (value, element) {
+				if (value == '')
+					return true;
+				var temp1;
+					temp1 = true;
+				var ind   = value.indexOf('@');
+				var str2  = value.substr(ind + 1);
+				var str3  = str2.substr(0, str2.indexOf('.'));
+				if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
+					return false;
+				var str1 = value.substr(0, ind);
+				if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
+					return false;
+				str = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
+				temp1 = str.test(value);
+				return temp1;
+			});
+		}
 	</script>
 </head>
 
@@ -228,6 +245,7 @@
 						</label>
 					</div>
 					<button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+					<button type="button" name="Button" class="btn btn-primary">Button</button>
 				</form>
 			</div>
 		</div>
