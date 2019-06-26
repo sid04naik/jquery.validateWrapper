@@ -17,7 +17,6 @@
 		this._pluginName = pluginName;
 		this._defaults   = $.fn[pluginName].defaults;
 		this._settings   = $.extend({}, this._defaults, options);
-
 		delete this._settings.messages;  //removing validator messages from _settings
 		delete this._settings.groups; // removing defined validate group from _settings
 		delete this._settings.require_from_group; // removing defined required_from_group from _settings
@@ -41,7 +40,6 @@
 			plugin = this;
 			this._build();
 			this._validate(); //validate Function
-			this._additionalMethod(); //additional validator methods
 		},
 
 		// Cache DOM nodes for performance
@@ -64,15 +62,17 @@
 				errorPlacement: (typeof this._settings.errorPlacement === "function") ? this._settings.errorPlacement: this._errorPlacement,
 				submitHandler : function (form) {
 					plugin._callback(form);
+					validator.destroy();
 				},
 			};
 			let validateObj = $.extend({}, this._settings, extraParams);
 			//jquery.validate Function
-			this.$_element.validate(validateObj);
+			var validator = this.$_element.validate(validateObj);
+			this._additionalMethod(validator); //additional validator methods
 		},
 
 		//additional functions of jquery validate listed here.
-		_additionalMethod: function () {
+		_additionalMethod: function (validator) {
 			//Default validator messages
 			jQuery.extend(jQuery.validator.messages, this._messages);
 
@@ -82,7 +82,6 @@
 					'require_from_group': [this._require_from_group[key], '.' + key]
 				});
 			}
-
 			//Rule to set group validation
 			for (var i in this._groups) {
 				for (var j in this._messages) {
@@ -99,6 +98,13 @@
 					}
 				}
 			}
+
+			//additional validators methods
+			if(typeof this._settings.addToValidator === "function")
+				this._settings.addToValidator.call();
+
+			//validating form on page load
+			if(this._settings.validateOnLoad) validator.form();
 		},
 
 		//Jquery Validator Function default definition
@@ -151,9 +157,9 @@
 		// Callback methods
 		_callback: function (form) {
 			var onComplete = this._settings.onComplete;
-			if (typeof onComplete === "function")
+			if (typeof onComplete === "function") {
 				onComplete(form);
-			else
+			}else
 				console.log('Default callback function is called..');
 		}
 	});
@@ -181,6 +187,8 @@
 		onComplete        : null,
 		groups            : null,
 		require_from_group: null,
+		addToValidator    : null,
+		validateOnLoad    : false,
 		messages          : { //JQuery validator default messages
 			require_from_group: jQuery.validator.format("Please fill out all {0} fields.")
 		}
