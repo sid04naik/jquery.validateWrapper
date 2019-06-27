@@ -1,7 +1,12 @@
-/*
-	Plugin Name: validateWrapper
-	Description: This wrapper plugin will run above the JQuery Validation Plugin.
-	Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating. This will help the developers to maintain a single file for all the form. It will also help the developers in terms of code redundancy, latency, and many other aspects.
+/*!
+ * JQuery Validation Wrapper Plugin v.1.19.1 - 27 Jun 19
+ * Works well for jQuery Validation Plugin v1.19.1
+ * Copyright (c) 2019 Siddhant Naik
+ *
+ * Plugin Name: validateWrapper
+ * Description: This wrapper plugin will run above the JQuery Validation Plugin.
+ * Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code.
+ * Just use the form selector and call the wrapper plugin and the form will start validating.
 */
 ; (function ($, window, document, undefined) {
 
@@ -28,6 +33,7 @@
 		this._messages           = $.extend({}, this._defaults.messages, options.messages);
 		this._groups             = $.extend({}, this._defaults.groups, options.groups);
 		this._require_from_group = $.extend({}, this._defaults.require_from_group, options.require_from_group);
+		
 
 		this._init();
 	}
@@ -82,7 +88,8 @@
 					'require_from_group': [this._require_from_group[key], '.' + key]
 				});
 			}
-			//Rule to set group validation
+
+			//applying custom messages for groups items
 			for (var i in this._groups) {
 				for (var j in this._messages) {
 					if (i == j) {
@@ -91,6 +98,23 @@
 								if($("#" + this.id,plugin.$_element).length) {
 									$("#" + this.id,plugin.$_element).rules("add", {
 										messages: { required: plugin._messages[j] }
+									});
+								}
+							});
+						}
+					}
+				}
+			}
+
+			//applying custom messages for require_from_group items
+			for (var i in this._require_from_group) {
+				for (var j in this._messages) {
+					if (i == j) {
+						if (this._messages[j] != '') {
+							$('.' + j).each(function () {
+								if($("#" + this.id,plugin.$_element).length) {
+									$("#" + this.id,plugin.$_element).rules("add", {
+										messages: { 'require_from_group': plugin._messages[j] }
 									});
 								}
 							});
