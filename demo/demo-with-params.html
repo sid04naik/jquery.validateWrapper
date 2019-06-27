@@ -31,7 +31,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validate-wrapper.js"> </script>
+	<script src="../jquery.validate-wrapper.min.js"> </script>
 	<script>
 		$(function () {
 			$('form').validateWrapper({
@@ -41,10 +41,10 @@
 				validClass  : 'valid-fld',
 				focusInvalid: false,
 				groups      : {
-					nameGroup: "first_name last_name",
+					g_name_group: "first_name last_name",
 				},
 				require_from_group:{
-					dobRequiredGroup : 2,
+					rfg_dob_group : 2,
 				},
 				highlight   : function (element, errorClass, validClass) {
 					jQuery(element).addClass(errorClass).removeClass(validClass);
@@ -70,11 +70,11 @@
 					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 						element.closest('.form-check').parent().append(error);
 					else if (element.hasClass('required-from-group')) {
-						var lastElement = $('.dobRequiredGroup:last');
+						var lastElement = $('.rfg_dob_group:last');
 						if ($(element).attr('name') == $(lastElement).attr('name'))
 							error.insertAfter(lastElement.parent().parent());
 					} else if (element.hasClass('group-in-one')) {
-						var lastEl = $('.nameGroup:last');
+						var lastEl = $('.g_name_group:last');
 						error.insertAfter(lastEl.parent().parent());
 					} else
 						error.insertAfter(element);
@@ -85,13 +85,12 @@
 				addToValidator: additionalMethods(),
 				// validateOnLoad: true,
 				messages: {
-					nameGroup  : "Please Enter Full Name",
-					required   : "Please don't keep the field empty.",   //setting different message
-					valid_email: "Please enter valid email."             //adding new validator Message
+					g_name_group : "Please Enter Full Name",
+					required     : "Please don't keep the field empty.",   //setting different message
+					valid_email  : "Please enter valid email.",            //adding new validator Message
+					rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")
 				}
 			});
-
-		
 		});
 
 		//this is my callback function
@@ -100,8 +99,8 @@
 		}
 
 		function additionalMethods(){
-			$( "input:filled" ).css( "background-color", "#bbbbff");
-			$( "input:blank" ).css( "background-color", "#D3D3D3" );
+			$( "input:filled, textarea:filled, select:filled" ).css( "background-color", "#bbbbff");
+			$( "input:blank, textarea:blank, select:blank" ).css( "background-color", "#D3D3D3" );
 
 			//form validation on non submit button
 			$( 'button[type="button"]' ).click(function() {
@@ -142,19 +141,19 @@
 					<div class="form-group">
 						<label for="email">Email address:</label>
 						<input type="text" class="form-control" id="email" name="email" required="true"
-							valid_email="true" />
+							valid_email="true"  />
 					</div>
 					<div class="form-group">
 						<div class="row">
 							<div class="col">
 								<label for="first_name">First Name:</label>
-								<input type="text" class="form-control nameGroup group-in-one" id="first_name"
+								<input type="text" class="form-control g_name_group group-in-one" id="first_name"
 									name="first_name" required="true" />
 							</div>
 							<div class="col">
 								<label for="last_name">Last Name:</label>
-								<input type="text" class="form-control nameGroup group-in-one" id="last_name"
-									name="last_name" required="true" />
+								<input type="text" class="form-control g_name_group group-in-one" id="last_name"
+									name="last_name" value="Luis" required="true" />
 							</div>
 						</div>
 					</div>
@@ -189,7 +188,7 @@
 						<div class="row">
 							<div class="col">
 								<label>Day</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="day" name="day">
+								<select class="form-control rfg_dob_group required-from-group" name="day" id="day">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -201,7 +200,7 @@
 							</div>
 							<div class="col">
 								<label>Month</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="month" name="month">
+								<select class="form-control rfg_dob_group required-from-group" name="month"  id="month">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
@@ -213,7 +212,7 @@
 							</div>
 							<div class="col">
 								<label>Year</label>
-								<select class="form-control dobRequiredGroup required-from-group" name="year" name="year">
+								<select class="form-control rfg_dob_group required-from-group" name="year"  id="year">
 									<option value="">--Please Select--</option>
 									<script>
 										var i;
