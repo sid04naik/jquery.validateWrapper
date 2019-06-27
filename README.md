@@ -20,6 +20,15 @@ Below is the documentation please follow them to get started with Jquery.validat
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 ```
 
+* Form tag is must
+  
+```html
+<form action="#" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
+```
+
+Note: `name` , `novalidate` and `onsubmit` attribute is must.
+
+
 ## [Documentation](https://sid04naik.github.io/jquery.validate-wrapper/)
 * Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper).
 * Load the jquery.validate-wrapper.
@@ -68,7 +77,6 @@ $('form').validateWrapper({
 	validClass  : 'valid-fld',
 });
 ```
-
 
 5. Field highlighting settings.
 
@@ -120,6 +128,43 @@ $('form').validateWrapper({
 });
 ```
 
+10. Calling validator on page load.
+
+```js
+$('form').validateWrapper({
+	validateOnLoad    : true
+});
+```
+
+11. Adding additional methods from jquery validate.
+
+```js
+	//function name can be anything.
+	function additionalMethods(){
+			//adding color to the filled element in the form
+			$( "input:filled, textarea:filled, select:filled" ).css( "background-color", "#bbbbff");
+			
+			//adding color to the blank element in the form
+			$( "input:blank, textarea:blank, select:blank" ).css( "background-color", "#D3D3D3" );
+
+			//Additional Function
+			jQuery.validator.addMethod("valid_email", function (value, element) {
+			//Your logic comes here.
+			});
+
+			//Setting form validation on non submit button
+			$( 'button[type="button"]' ).click(function() {
+				var form = $('form');
+				if(form.valid()) {
+					//callback function
+				}
+			});
+		}
+```
+Setting form validation on normal button the just add onClick event handler to the button and call valid() method on form.
+
+Note: All the function in the additionalMethods are of jquery validate plugin.
+
 * Adding and modifying validator messages.
 
 ```js
@@ -131,13 +176,6 @@ $('form').validateWrapper({
 });
 ```
 
-Note: You can define custom validation using *jQuery.validator.addMethod* anywhere in your code.
-
-```js
-jQuery.validator.addMethod("valid_email", function (value, element) {
-//Your logic comes here.
-});
-```
 
 * Hiding error messages for some fields.
 Just add  `hide-validation-message = true` as a attribute for the element.
@@ -152,55 +190,69 @@ Just add  `hide-validation-message = true` as a attribute for the element.
 ```js
 $('form').validateWrapper({
 	groups: {
-		nameGroup: "first_name last_name" //nameGroup is a groupName
+		g_name_group: "first_name last_name" //nameGroup is a groupName
 	}
 });
 ```
-2. Set the "groupName" as the class name for the fields. Also add `group-in-one` class for the field.
+2. Set the "groupName" as the class name for the fields. And add `group-in-one` class for the field to setup message.
 
 ```html
-<input type="text" class="form-control nameGroup group-in-one" id="first_name" name="first_name" required="true" />
-<input type="text" class="form-control nameGroup group-in-one" id="last_name" name="last_name" required="true" />
+<input type="text" class="form-control g_name_group group-in-one" id="first_name" name="first_name" required="true" />g_name_groupg_name_groupg_name_group
+<input type="text" class="form-control g_name_group group-in-one" id="last_name" name="last_name" required="true" />
 ```
 
-3. To set different message for the group.
+3. To set message for the group.
 
 ```js
 $('form').validateWrapper({
 	messages: {
-		nameGroup: "Please enter full name"
+		g_name_group: "Group message"
 	}
 });
 ```
 
-* Add `require_from_group` validation
+Note: group name has to be unique so we follow a convention to setup groups. So the group name will start with a 'g_' followed by group_name.
+
+* Adding `require_from_group` validation and a custom message for it.
 `require_from_group` ensures a given number of fields in a group are complete.
-1. You just have to add class `require_from_group` for the element and add a `group_class`.
+1. You just have to add class `require_from_group` to trigger require_from_group rule for the element. And add a `group_class` for setup message.
 
 ```html
 <!-- 
-dobRequiredGroup is set as group class for these fields. you can have multiple group_classes
+rfg_dob_group is a group class for these fields. you can have multiple group_classes
 -->
-<select class="form-control dobRequiredGroup require_from_group" name="day" >
+<select class="form-control rfg_dob_group require_from_group" name="day" >
 	<option value="">--Please Select--</option>
 </select>
-<select class="form-control dobRequiredGroup require_from_group" name="month" >
+<select class="form-control rfg_dob_group require_from_group" name="month" >
 	<option value="">--Please Select--</option>
 </select>
-<select class="form-control dobRequiredGroup require_from_group" name="year" >
+<select class="form-control rfg_dob_group require_from_group" name="year" >
 	<option value="">--Please Select--</option>
 </select>
 ```
 
-2. Add number fields to validate form the group.
+2. Define number of fields to validate.
    
 ```js
 $('form').validateWrapper({
 	require_from_group:{
-		dobRequiredGroup : 2,
+		rfg_dob_group : 2,
 	},
 });
 ```
+
+3. To set message for the group.
+
+```js
+$('form').validateWrapper({
+	messages: {
+		rfg_dob_group: "Required from group message"
+	}
+});
+```
+
+Note: group name has to be unique so we follow a convention to setup require_from_group rule. So the group name will start with a 'rfg_' followed by group_name.
    
 ## Demo URL's
 *   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/default-demo.html)
