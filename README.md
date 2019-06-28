@@ -20,13 +20,13 @@ Below is the documentation please follow them to get started with Jquery.validat
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
 ```
 
-* Form tag is must
+* Form tag.
   
 ```html
 <form action="#" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 ```
 
-Note: `name` , `novalidate` and `onsubmit` attribute is must.
+Note: `name` , `novalidate` and `onsubmit` attributes must to set.
 
 
 ## [Documentation](https://sid04naik.github.io/jquery.validate-wrapper/)
@@ -228,7 +228,7 @@ Note: group name has to be unique so we follow a convention to setup groups. So 
 
 ```html
 <!-- 
-rfg_dob_group is a group class for these fields. you can have multiple group_classes
+rfg_dob_group is a group class for these fields. you can have multiple group_classes.
 -->
 <select class="form-control rfg_dob_group require_from_group" name="day" >
 	<option value="">--Please Select--</option>
