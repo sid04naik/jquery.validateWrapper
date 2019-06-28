@@ -68,7 +68,8 @@
 				errorPlacement: (typeof this._settings.errorPlacement === "function") ? this._settings.errorPlacement: this._errorPlacement,
 				submitHandler : function (form) {
 					plugin._callback(form);
-					validator.destroy();
+					if(plugin._settings.destroyOnCallback)
+						validator.destroy();
 				},
 			};
 			let validateObj = $.extend({}, this._settings, extraParams);
@@ -213,6 +214,7 @@
 		require_from_group: null,
 		addToValidator    : null,
 		validateOnLoad    : false,
+		destroyOnCallback : false,
 		messages          : { //JQuery validator default messages
 			require_from_group: jQuery.validator.format("Please fill out all {0} fields.")
 		}

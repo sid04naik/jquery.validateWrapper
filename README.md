@@ -136,7 +136,16 @@ $('form').validateWrapper({
 });
 ```
 
-11. Adding additional methods from jquery validate.
+11. Destroy Validator once the callback function is executed.
+
+
+```js
+$('form').validateWrapper({
+	destroyOnCallback    : true
+});
+```
+
+13. Adding additional methods from jquery validate.
 
 ```js
 	//function name can be anything.
