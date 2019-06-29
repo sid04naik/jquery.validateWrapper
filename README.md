@@ -294,7 +294,7 @@ Note: group name has to be unique so we follow a convention to setup require_fro
 *   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/default-demo.html)
 *   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/demo-with-params.html)
 
-##LICENSE
+## LICENSE
 
 [MIT License](https://github.com/sid04naik/jquery.validate-wrapper/blob/master/LICENSE)
 
