@@ -33,9 +33,13 @@ Note: `name` , `novalidate` and `onsubmit` attributes must to set.
 * Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper).
 * Load the jquery.validate-wrapper.
 
+### CDN
+    Minified: https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js
+Non Minified: https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js
+
 ```js
-<script src="../jquery.validate-wrapper.min.js"> </script> //minified
-<script src="../jquery.validate-wrapper.js"> </script> //non minified
+<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js"> </script> //minified
+<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js"> </script> //non minified
 ```
 * Initializing the plugin with default Settings.
 
