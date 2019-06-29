@@ -13,8 +13,7 @@
 	"use strict";
 
 	//Default Parameters
-	var pluginName = "validateWrapper";
-	var plugin;
+	let plugin,pluginName = "validateWrapper";
 
 	//Plugin constructor
 	function Plugin(element, options) {
@@ -25,15 +24,14 @@
 		delete this._settings.messages;  //removing validator messages from _settings
 		delete this._settings.groups; // removing defined validate group from _settings
 		delete this._settings.require_from_group; // removing defined required_from_group from _settings
-		if (options.messages && typeof options.messages != "object")
-			delete options.messages;
-
+		
+		if (options.messages && typeof options.messages != "object") delete options.messages;
 		if (options.groups && typeof options.groups != "object") delete options.groups;
+		if (options.require_from_group && typeof options.require_from_group != "object") delete options.require_from_group;
 
 		this._messages           = $.extend({}, this._defaults.messages, options.messages);
 		this._groups             = $.extend({}, this._defaults.groups, options.groups);
 		this._require_from_group = $.extend({}, this._defaults.require_from_group, options.require_from_group);
-		
 
 		this._init();
 	}
@@ -53,13 +51,32 @@
 			this.$_element = $(this._element);
 		},
 
+		// Bind events that trigger methods
+		_bindEvents: function (selector,event) {
+			$(selector).on(event + '.' + plugin._pluginName, function () {
+				let form = $('form');
+				if(form.valid()) {
+					plugin._callback(form);
+					if(plugin._settings.destroyOnCallback)
+						plugin._unbindEvents(selector);
+				}			
+			});
+		},
+
+		// Unbind events that trigger methods
+		_unbindEvents: function (selector) {
+			$(selector).off('.' + this._pluginName);
+		},
+
 		// Remove plugin instance completely
-		_destroy: function () {
+		_destroy: function (myValidator) {
+			myValidator.destroy();
 			this.$_element.removeData();
 		},
 
 		//validate wrapper
 		_validate: function () {
+			var myValidator;
 			let extraParams = {
 				highlight     : (typeof this._settings.highlight === "function") ? this._settings.highlight          : this._highlight,
 				unhighlight   : (typeof this._settings.unhighlight === "function") ? this._settings.unhighlight      : this._unHighlight,
@@ -69,30 +86,30 @@
 				submitHandler : function (form) {
 					plugin._callback(form);
 					if(plugin._settings.destroyOnCallback)
-						validator.destroy();
+						plugin._destroy(myValidator);
 				},
 			};
 			let validateObj = $.extend({}, this._settings, extraParams);
 			//jquery.validate Function
-			var validator = this.$_element.validate(validateObj);
-			this._additionalMethod(validator); //additional validator methods
+			myValidator = this.$_element.validate(validateObj);
+			this._additionalMethod(myValidator); //additional validator methods
 		},
 
 		//additional functions of jquery validate listed here.
-		_additionalMethod: function (validator) {
+		_additionalMethod: function (myValidator) {
 			//Default validator messages
 			jQuery.extend(jQuery.validator.messages, this._messages);
 
 			//Rule to set require_from_group validation
-			for (var key in this._require_from_group) {
+			for (let key in this._require_from_group) {
 				jQuery.validator.addClassRules(key, {
 					'require_from_group': [this._require_from_group[key], '.' + key]
 				});
 			}
 
 			//applying custom messages for groups items
-			for (var i in this._groups) {
-				for (var j in this._messages) {
+			for (let i in this._groups) {
+				for (let j in this._messages) {
 					if (i == j) {
 						if (this._messages[j] != '') {
 							$('.' + j).each(function () {
@@ -108,8 +125,8 @@
 			}
 
 			//applying custom messages for require_from_group items
-			for (var i in this._require_from_group) {
-				for (var j in this._messages) {
+			for (let i in this._require_from_group) {
+				for (let j in this._messages) {
 					if (i == j) {
 						if (this._messages[j] != '') {
 							$('.' + j).each(function () {
@@ -129,7 +146,12 @@
 				this._settings.addToValidator.call();
 
 			//validating form on page load
-			if(this._settings.validateOnLoad) validator.form();
+			if(this._settings.validateOnLoad) myValidator.form();
+			//validating form on click of element
+			if(this._settings.validateOnClick) this._bindEvents('._validate_oc','click');
+			//validating form on click of element
+			if(this._settings.validateOnKeyPress) this._bindEvents('._validate_kp','keypress');
+
 		},
 
 		//Jquery Validator Function default definition
@@ -160,17 +182,17 @@
 			else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 				element.closest('.form-check').parent().append(error);
 			else if (element.hasClass('required-from-group')) {
-				for (var k in plugin._require_from_group) {
-					var lastElement = $('.' + k + ':last');
+				for (let k in plugin._require_from_group) {
+					let lastElement = $('.' + k + ':last');
 					if ($(element).attr('name') == $(lastElement).attr('name')) {
 						error.insertAfter(lastElement.parent().parent());
 						break;
 					}
 				}
 			} else if (element.hasClass('group-in-one')) {
-				for (var key in plugin._groups) {
+				for (let key in plugin._groups) {
 					if (element.hasClass(key)) {
-						var lastEl = $('.' + key + ':last');
+						let lastEl = $('.' + key + ':last');
 						error.insertAfter(lastEl.parent().parent());
 						break;
 					}
@@ -181,7 +203,7 @@
 
 		// Callback methods
 		_callback: function (form) {
-			var onComplete = this._settings.onComplete;
+			let onComplete = this._settings.onComplete;
 			if (typeof onComplete === "function") {
 				onComplete(form);
 			}else
@@ -214,6 +236,8 @@
 		require_from_group: null,
 		addToValidator    : null,
 		validateOnLoad    : false,
+		validateOnClick   : false,
+		validateOnKeyPress: false,
 		destroyOnCallback : false,
 		messages          : { //JQuery validator default messages
 			require_from_group: jQuery.validator.format("Please fill out all {0} fields.")

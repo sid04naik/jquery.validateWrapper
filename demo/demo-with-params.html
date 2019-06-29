@@ -26,6 +26,14 @@
 		.valid-fld {
 			border: 1px solid #90EE90;
 		}
+
+		.filled {
+			background-color: aquamarine;
+		}
+
+		.blank {
+			background-color: antiquewhite;
+		}
 	</style>
 	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -43,10 +51,10 @@
 				groups      : {
 					g_name_group: "first_name last_name",
 				},
-				require_from_group:{
-					rfg_dob_group : 2,
+				require_from_group: {
+					rfg_dob_group: 2,
 				},
-				highlight   : function (element, errorClass, validClass) {
+				highlight: function (element, errorClass, validClass) {
 					jQuery(element).addClass(errorClass).removeClass(validClass);
 				},
 				unhighlight: function (element, errorClass, validClass) {
@@ -70,11 +78,11 @@
 					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 						element.closest('.form-check').parent().append(error);
 					else if (element.hasClass('required-from-group')) {
-						var lastElement = $('.rfg_dob_group:last');
+						let lastElement = $('.rfg_dob_group:last');
 						if ($(element).attr('name') == $(lastElement).attr('name'))
 							error.insertAfter(lastElement.parent().parent());
 					} else if (element.hasClass('group-in-one')) {
-						var lastEl = $('.g_name_group:last');
+						let lastEl = $('.g_name_group:last');
 						error.insertAfter(lastEl.parent().parent());
 					} else
 						error.insertAfter(element);
@@ -82,53 +90,46 @@
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
-				addToValidator: additionalMethods(),
-				// validateOnLoad: true,
-				//destroyOnCallback: true,
-				messages: {
-					g_name_group : "Please Enter Full Name",
-					required     : "Please don't keep the field empty.",   //setting different message
-					valid_email  : "Please enter valid email.",            //adding new validator Message
-					rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")
+				addToValidator    : additionalMethods(),
+				validateOnLoad    : false,
+				validateOnClick   : true,
+				validateOnKeyPress: false,
+				destroyOnCallback : false,
+				messages          : {
+					g_name_group : "Please Enter Full Name",//setting message for group
+					required     : "Please don't keep the field empty.",//setting different message
+					valid_email  : "Please enter valid email.",//adding new validator Message
+					rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")//setting message for require_from_group
 				}
 			});
 		});
 
-		//this is my callback function
-		function submitData(form, data) {
-			console.log('Submit Data function is called..');
-		}
+		//Additional Function
+		function additionalMethods() {
+			$("input:filled, textarea:filled, select:filled").addClass('filled');
+			$("input:blank, textarea:blank, select:blank").addClass('blank');
 
-		function additionalMethods(){
-			$( "input:filled, textarea:filled, select:filled" ).css( "background-color", "#bbbbff");
-			$( "input:blank, textarea:blank, select:blank" ).css( "background-color", "#D3D3D3" );
-
-			//form validation on non submit button
-			$( 'button[type="button"]' ).click(function() {
-				var form = $('form');
-				if(form.valid()) {
-					submitData(form, $(form).serializeArray());
-				}
-			});	
-
-			//Additional Function
 			jQuery.validator.addMethod("valid_email", function (value, element) {
 				if (value == '')
 					return true;
-				var temp1;
-					temp1 = true;
-				var ind   = value.indexOf('@');
-				var str2  = value.substr(ind + 1);
-				var str3  = str2.substr(0, str2.indexOf('.'));
+				let temp1 = true;
+				let ind = value.indexOf('@');
+				let str2 = value.substr(ind + 1);
+				let str3 = str2.substr(0, str2.indexOf('.'));
 				if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
 					return false;
-				var str1 = value.substr(0, ind);
+				let str1 = value.substr(0, ind);
 				if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
 					return false;
 				str = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
 				temp1 = str.test(value);
 				return temp1;
 			});
+		}
+
+		//this is my callback function
+		function submitData(form, data) {
+			console.log('Submit Data function is called..');
 		}
 	</script>
 </head>
@@ -141,14 +142,14 @@
 				<form action="" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 					<div class="form-group">
 						<label for="email">Email address:</label>
-						<input type="text" class="form-control" id="email" name="email" required="true"
-							valid_email="true"  />
+						<input type="text" class="form-control _validate_kp" id="email" name="email" required="true"
+							valid_email="true" />
 					</div>
 					<div class="form-group">
 						<div class="row">
 							<div class="col">
 								<label for="first_name">First Name:</label>
-								<input type="text" class="form-control g_name_group group-in-one" id="first_name"
+								<input type="text" class="form-control g_name_group group-in-one " id="first_name"
 									name="first_name" required="true" />
 							</div>
 							<div class="col">
@@ -164,7 +165,8 @@
 							<div class="input-group-prepend">
 								<span class="input-group-text">@</span>
 							</div>
-							<input type="text" class="form-control" id="username" name="username" hide-validation-message="true" required="true" />
+							<input type="text" class="form-control" id="username" name="username"
+								hide-validation-message="true" required="true" />
 						</div>
 					</div>
 					<div class="form-group">
@@ -177,8 +179,8 @@
 					</div>
 					<div class="form-group">
 						<label for="confirm_password">Confirm Password:</label>
-						<input type="password" class="form-control" id="confirm_password" name="confirm_password" required="true"
-							equalTo="#password" />
+						<input type="password" class="form-control" id="confirm_password" name="confirm_password"
+							required="true" equalTo="#password" />
 					</div>
 					<div class="form-group">
 						<label for="address">Address:</label>
@@ -192,8 +194,7 @@
 								<select class="form-control rfg_dob_group required-from-group" name="day" id="day">
 									<option value="">--Please Select--</option>
 									<script>
-										var i;
-										for (i = 1; i <= 31; ++i) {
+										for (let i = 1; i <= 31; ++i) {
 											document.write('<option value="' + i + '">' + i + '</option>');
 										}
 									</script>
@@ -201,11 +202,10 @@
 							</div>
 							<div class="col">
 								<label>Month</label>
-								<select class="form-control rfg_dob_group required-from-group" name="month"  id="month">
+								<select class="form-control rfg_dob_group required-from-group" name="month" id="month">
 									<option value="">--Please Select--</option>
 									<script>
-										var i;
-										for (i = 1; i <= 12; ++i) {
+										for (let i = 1; i <= 12; ++i) {
 											document.write('<option value="' + i + '">' + i + '</option>');
 										}
 									</script>
@@ -213,11 +213,10 @@
 							</div>
 							<div class="col">
 								<label>Year</label>
-								<select class="form-control rfg_dob_group required-from-group" name="year"  id="year">
+								<select class="form-control rfg_dob_group required-from-group" name="year" id="year">
 									<option value="">--Please Select--</option>
 									<script>
-										var i;
-										for (i = 2001; i <= 2020; ++i) {
+										for (let i = 2001; i <= 2020; ++i) {
 											document.write('<option value="' + i + '">' + i + '</option>');
 										}
 									</script>
@@ -245,7 +244,7 @@
 						</label>
 					</div>
 					<button type="submit" name="Submit" class="btn btn-primary">Submit</button>
-					<button type="button" name="Button" class="btn btn-primary">Button</button>
+					<button type="button" name="Button" class="btn btn-primary _validate_oc">Button</button>
 				</form>
 			</div>
 		</div>
