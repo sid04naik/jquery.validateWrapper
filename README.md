@@ -140,8 +140,31 @@ $('form').validateWrapper({
 });
 ```
 
-11. Destroy Validator once the callback function is executed.
+11. Calling validator on click event.
+Set `validateOnClick` as true and add class `_validate_oc` to the element on which you want to trigger validation.
 
+```js
+$('form').validateWrapper({
+	validateOnClick    : true
+});
+```
+```html
+<button type="button" name="Button" class="btn btn-primary _validate_oc">Button</button>
+```
+
+12.  Calling validator on keypress event.
+Set `validateOnKeyPress` as true and add class `_validate_kp` to the element on which you want to trigger validation.
+
+```js
+$('form').validateWrapper({
+	validateOnKeyPress    : true
+});
+```
+```html
+<input type="text" class="form-control _validate_kp" id="email" name="email" required="true" />
+```
+
+13.  Destroy Validator once the callback function is executed.
 
 ```js
 $('form').validateWrapper({
@@ -149,7 +172,7 @@ $('form').validateWrapper({
 });
 ```
 
-13. Adding additional methods from jquery validate.
+1.  Adding additional methods from jquery validate.
 
 ```js
 	//function name can be anything.
