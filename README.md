@@ -34,8 +34,8 @@ Note: `name` , `novalidate` and `onsubmit` attributes must to set.
 * Load the jquery.validate-wrapper.
 
 ### CDN
-    Minified: https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js
-Non Minified: https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js
+- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js)
+- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js)
 
 ```js
 <script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js"> </script> //minified
