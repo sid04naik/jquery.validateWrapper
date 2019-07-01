@@ -175,27 +175,27 @@ $('form').validateWrapper({
 1.  Adding additional methods from jquery validate.
 
 ```js
-	//function name can be anything.
-	function additionalMethods(){
-			//adding color to the filled element in the form
-			$( "input:filled, textarea:filled, select:filled" ).css( "background-color", "#bbbbff");
-			
-			//adding color to the blank element in the form
-			$( "input:blank, textarea:blank, select:blank" ).css( "background-color", "#D3D3D3" );
+//function name can be anything.
+function additionalMethods(){
+	//adding color to the filled element in the form
+	$( "input:filled, textarea:filled, select:filled" ).css( "background-color", "#bbbbff");
+	
+	//adding color to the blank element in the form
+	$( "input:blank, textarea:blank, select:blank" ).css( "background-color", "#D3D3D3" );
 
-			//Additional Function
-			jQuery.validator.addMethod("valid_email", function (value, element) {
-			//Your logic comes here.
-			});
+	//Additional Function
+	jQuery.validator.addMethod("valid_email", function (value, element) {
+	//Your logic comes here.
+	});
 
-			//Setting form validation on non submit button
-			$( 'button[type="button"]' ).click(function() {
-				var form = $('form');
-				if(form.valid()) {
-					//callback function
-				}
-			});
+	//Setting form validation on non submit button
+	$( 'button[type="button"]' ).click(function() {
+		var form = $('form');
+		if(form.valid()) {
+			//callback function
 		}
+	});
+}
 ```
 Setting form validation on normal button the just add onClick event handler to the button and call valid() method on form.
 
