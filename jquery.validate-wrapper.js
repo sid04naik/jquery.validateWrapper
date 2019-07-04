@@ -168,11 +168,25 @@
 
 		//Jquery Validator Function default definition
 		_highlight: function (element, errorClass, validClass) {
-			jQuery(element).addClass(errorClass).removeClass(validClass);
+			if(jQuery(element).next().hasClass('input-group-append'))
+				jQuery(element).next().children().addClass(errorClass).removeClass(validClass);
+			if (jQuery(element).prev().hasClass('input-group-prepend'))
+				jQuery(element).prev().children().addClass(errorClass).removeClass(validClass);
+			if (jQuery(element).is('input[type=radio]'))
+				$("input[name='"+element.name+"']").addClass(errorClass).removeClass(validClass);
+			else
+				jQuery(element).addClass(errorClass).removeClass(validClass);
 		},
 
 		_unHighlight: function (element, errorClass, validClass) {
-			jQuery(element).removeClass(errorClass).addClass(validClass);
+			if(jQuery(element).next().hasClass('input-group-append'))
+				jQuery(element).next().children().removeClass(errorClass).addClass(validClass);
+			if (jQuery(element).prev().hasClass('input-group-prepend'))
+				jQuery(element).prev().children().removeClass(errorClass).addClass(validClass);
+			if (jQuery(element).is('input[type=radio]'))
+				$("input[name='"+element.name+"']").removeClass(errorClass).addClass(validClass);
+			else
+				jQuery(element).removeClass(errorClass).addClass(validClass);
 		},
 
 		_inValidHandler: function (form, validator) {

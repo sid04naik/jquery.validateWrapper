@@ -13,10 +13,14 @@
 		form select.error-fld,
 		form input[type="password"].error-fld,
 		form input[type="email"].error-fld,
-		form input[type="number"].error-fld {
+		form input[type="number"].error-fld,
+		form .input-group-text.error-fld {
 			border          : 1px solid #d7244c;
 			background-color: #ffffff;
-			color           : #d7244c;
+		}
+
+		form .form-check-input.error-fld{
+			outline: 1px solid #d7244c;
 		}
 
 		.error-fld {
@@ -55,10 +59,27 @@
 					rfg_dob_group: 2,
 				},
 				highlight: function (element, errorClass, validClass) {
-					jQuery(element).addClass(errorClass).removeClass(validClass);
+					if(jQuery(element).next().hasClass('input-group-append'))
+						jQuery(element).next().children().addClass(errorClass).removeClass(validClass);
+					if (jQuery(element).prev().hasClass('input-group-prepend'))
+						jQuery(element).prev().children().addClass(errorClass).removeClass(validClass);
+					if (jQuery(element).is('input[type=radio]'))
+						$("input[name='"+element.name+"']").addClass(errorClass).removeClass(validClass);
+					else
+						jQuery(element).addClass(errorClass).removeClass(validClass);
+
 				},
 				unhighlight: function (element, errorClass, validClass) {
-					jQuery(element).removeClass(errorClass).addClass(validClass);
+					if(jQuery(element).next().hasClass('input-group-append'))
+						jQuery(element).next().children().removeClass(errorClass).addClass(validClass);
+					if (jQuery(element).prev().hasClass('input-group-prepend'))
+						jQuery(element).prev().children().removeClass(errorClass).addClass(validClass);
+					if (jQuery(element).is('input[type=radio]'))
+						$("input[name='"+element.name+"']").removeClass(errorClass).addClass(validClass);
+					else
+						jQuery(element).removeClass(errorClass).addClass(validClass);
+
+
 				},
 				invalidHandler: function (form, validator) {
 					if (!validator.numberOfInvalids())
@@ -102,10 +123,12 @@
 					rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")//setting message for require_from_group
 				}
 			});
+			outer_validation_methods();
 		});
 
 		//Additional Function
 		function additionalMethods() {
+
 			$("input:filled, textarea:filled, select:filled").addClass('filled');
 			$("input:blank, textarea:blank, select:blank").addClass('blank');
 
@@ -127,6 +150,10 @@
 			});
 		}
 
+		function outer_validation_methods(){
+			//custom rules can be set here.
+		}
+
 		//this is my callback function
 		function submitData(form, data) {
 			console.log('Submit Data function is called..');
@@ -139,7 +166,7 @@
 		<div class="clearfix" style="height:30px;"></div>
 		<div class="card">
 			<div class="card-body">
-				<form action="" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
+				<form action="" id="demoForm" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 					<div class="form-group">
 						<label for="email">Email address:</label>
 						<input type="text" class="form-control _validate_kp" id="email" name="email" required="true"

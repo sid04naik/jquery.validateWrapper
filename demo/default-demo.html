@@ -13,10 +13,14 @@
 		form select.error,
 		form input[type="password"].error,
 		form input[type="email"].error,
-		form input[type="number"].error {
+		form input[type="number"].error,
+		form .input-group-text.error {
 			border          : 1px solid #d7244c;
 			background-color: #ffffff;
-			color           : #d7244c;
+		}
+
+		form .form-check-input.error{
+			outline: 1px solid #d7244c;
 		}
 
 		.error {
@@ -39,7 +43,12 @@
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
 			});
+			outer_validation_methods();
 		});
+
+		function outer_validation_methods(){
+			//custom rules can be set here.
+		}
 
 		//this is my callback function
 		function submitData(form, data) {
