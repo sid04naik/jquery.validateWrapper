@@ -1,5 +1,5 @@
 /*!
- * JQuery Validation Wrapper Plugin v1.7.1
+ * JQuery Validation Wrapper Plugin v1.19.1
  * Works well for jQuery Validation Plugin v1.19.1
  * Copyright (c) 2019 Siddhant Naik
  *
