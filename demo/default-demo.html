@@ -43,12 +43,7 @@
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				}
 			});
-			outer_validation_methods();
 		});
-
-		function outer_validation_methods(){
-			//custom rules can be set here.
-		}
 
 		//this is my callback function
 		function submitData(form, data) {
@@ -93,7 +88,7 @@
 					</div>
 					<div class="form-group">
 						<label for="age">Age:</label>
-						<input type="number" class="form-control" id="age" name="age" required="true" step="5" />
+						<input type="number" class="form-control" id="age" name="age" required="true" step="5" age="true" />
 					</div>
 					<div class="form-group">
 						<label for="username">Password:</label>

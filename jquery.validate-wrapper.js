@@ -1,5 +1,5 @@
 /*!
- * JQuery Validation Wrapper Plugin v.1.19.1 - 27 Jun 19
+ * JQuery Validation Wrapper Plugin v1.7.1
  * Works well for jQuery Validation Plugin v1.19.1
  * Copyright (c) 2019 Siddhant Naik
  *
@@ -21,17 +21,21 @@
 		this._pluginName = pluginName;
 		this._defaults   = $.fn[pluginName].defaults;
 		this._settings   = $.extend({}, this._defaults, options);
-		delete this._settings.messages;  //removing validator messages from _settings
-		delete this._settings.groups; // removing defined validate group from _settings
-		delete this._settings.require_from_group; // removing defined required_from_group from _settings
+		delete this._settings.messages;  //removing validator messages from settings
+		delete this._settings.groups; // removing validator groups from settings
+		delete this._settings.require_from_group; // removing validator `required_from_group`s from settings
+		delete this._settings.showErrors; //removing validator errors from settings.
 
 		if (options.messages && typeof options.messages != "object") delete options.messages;
 		if (options.groups && typeof options.groups != "object") delete options.groups;
 		if (options.require_from_group && typeof options.require_from_group != "object") delete options.require_from_group;
+		if (options.showErrors && typeof options.showErrors != "object") delete options.showErrors;
+
 
 		this._messages           = $.extend({}, this._defaults.messages, options.messages);
 		this._groups             = $.extend({}, this._defaults.groups, options.groups);
 		this._require_from_group = $.extend({}, this._defaults.require_from_group, options.require_from_group);
+		this._showErrors 		 = $.extend({}, this._defaults.showErrors, options.showErrors);
 
 		this._init();
 	}
@@ -41,80 +45,86 @@
 
 		// Initialization logic
 		_init: function () {
-			plugin = this;
-			this._build();
-			this._validate(); //validate Function
+			plugin = this; //storing plugin reference in plugin variable.
+			plugin._build();
+			plugin._validate(); //validate Function
 		},
 
 		// Cache DOM nodes for performance
 		_build: function () {
-			this.$_element = $(this._element);
+			plugin.$_element = $(plugin._element);
 		},
 
 		// Bind events that trigger methods
-		_bindEvents: function (selector, event) {
-			$(selector).on(event + '.' + plugin._pluginName, function () {
-				let form = $('form');
-				if (form.valid()) {
-					plugin._callback(form);
-					if (plugin._settings.destroyOnCallback)
-						plugin._unbindEvents(selector);
+		_bindEvents: function (selector, eventHandler,validator,task) {
+			$(selector,plugin.$_element).on(eventHandler + '.' + plugin._pluginName, function () {
+				switch(task) {
+					case 'reset':
+						if($(selector,plugin.$_element).attr('type') == "reset") validator.resetForm();
+					break;
+					case 'validate': //validate
+					default:
+						if (plugin.$_element.valid()) {
+							plugin._callback(plugin.$_element);
+							if (plugin._settings.destroyOnCallback) plugin._unbindEvents(selector);
+						}
+					break;
 				}
 			});
 		},
 
 		// Unbind events that trigger methods
 		_unbindEvents: function (selector) {
-			$(selector).off('.' + this._pluginName);
+			$(selector,plugin.$_element).off('.' + plugin._pluginName);
 		},
 
-		// Remove plugin instance completely
+		// destroying all the instances completely
 		_destroy: function (myValidator) {
 			myValidator.destroy();
-			this.$_element.removeData();
+			plugin.$_element.removeData();
 		},
 
 		//validate wrapper
 		_validate: function () {
 			var myValidator;
 			let extraParams = {
-				highlight     : (typeof this._settings.highlight === "function") ? this._settings.highlight : this._highlight,
-				unhighlight   : (typeof this._settings.unhighlight === "function") ?  this._settings.unhighlight      : this._unHighlight,
-				invalidHandler: (typeof this._settings.invalidHandler === "function") ?  this._settings.invalidHandler : this._inValidHandler,
-				groups        : (typeof this._groups === "object") ? this._groups  : null,
-				errorPlacement: (typeof this._settings.errorPlacement === "function") ? this._settings.errorPlacement: this._errorPlacement,
-				submitHandler : function (form) {
-					plugin._callback(form);
+				normalizer    : (typeof plugin._settings.normalizer === "function") ? plugin._settings.normalizer : plugin._normalizer,
+				highlight     : (typeof plugin._settings.highlight === "function") ? plugin._settings.highlight : plugin._highlight,
+				unhighlight   : (typeof plugin._settings.unhighlight === "function") ?  plugin._settings.unhighlight : tpluginhis._unHighlight,
+				invalidHandler: (typeof plugin._settings.invalidHandler === "function") ?  plugin._settings.invalidHandler: plugin._inValidHandler,
+				groups        : (typeof plugin._groups === "object") ? plugin._groups : null,
+				errorPlacement: (typeof plugin._settings.errorPlacement === "function") ? plugin._settings.errorPlacement : plugin._errorPlacement,
+				submitHandler : function (form, event) {
+					plugin._callback(form, event);
 					if (plugin._settings.destroyOnCallback)
 						plugin._destroy(myValidator);
 				},
 			};
-			let validateObj = $.extend({}, this._settings, extraParams);
-			//jquery.validate Function
-			    myValidator = this.$_element.validate(validateObj);
-			this._additionalMethod(myValidator); //additional validator methods
+			let validateObj = $.extend({}, plugin._settings, extraParams);
+			myValidator = plugin.$_element.validate(validateObj); //jquery.validate Function
+			plugin._additionalMethod(myValidator); //additional validator methods
 		},
 
 		//additional functions of jquery validate listed here.
 		_additionalMethod: function (myValidator) {
 			//Default validator messages
-			jQuery.extend(jQuery.validator.messages, this._messages);
+			jQuery.extend(jQuery.validator.messages, plugin._messages);
 
 			//Rule to set require_from_group validation
-			for (let key in this._require_from_group) {
+			for (let key in plugin._require_from_group) {
 				jQuery.validator.addClassRules(key, {
-					'require_from_group': [this._require_from_group[key], '.' + key]
+					'require_from_group': [plugin._require_from_group[key], '.' + key]
 				});
 			}
 
 			//applying custom messages for require_from_group items
-			for (let i in this._require_from_group) {
-				for (let j in this._messages) {
+			for (let i in plugin._require_from_group) {
+				for (let j in plugin._messages) {
 					if (i == j) {
-						if (this._messages[j] != '') {
+						if (plugin._messages[j] != '') {
 							$('.' + j).each(function () {
-								if ($("#" + this.id, plugin.$_element).length) {
-									$("#" + this.id, plugin.$_element).rules("add", {
+								if ($("[name=" + this.name + "]", plugin.$_element).length) {
+									$("[name=" + this.name + "]", plugin.$_element).rules("add", {
 										messages: { 'require_from_group': plugin._messages[j] }
 									});
 								}
@@ -125,13 +135,13 @@
 			}
 
 			//applying custom messages for groups items
-			for (let i in this._groups) {
-				for (let j in this._messages) {
+			for (let i in plugin._groups) {
+				for (let j in plugin._messages) {
 					if (i == j) {
-						if (this._messages[j] != '') {
+						if (plugin._messages[j] != '') {
 							$('.' + j).each(function () {
-								if ($("#" + this.id, plugin.$_element).length) {
-									$("#" + this.id, plugin.$_element).rules("add", {
+								if ($("[name=" + this.name + "]", plugin.$_element).length) {
+									$("[name=" + this.name + "]", plugin.$_element).rules("add", {
 										messages: { required: plugin._messages[j] }
 									});
 								}
@@ -141,32 +151,60 @@
 				}
 			}
 
+			//overriding email validation. 
+			jQuery.validator.addMethod("email", function (value) {
+				if (value == '')
+					return true;
+				let index,regex,str1,str2,str3;
+				index = value.indexOf('@');
+				str1  = value.substr(0, index);
+				if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
+					return false;
+				str2 = value.substr(index + 1);
+				str3 = str2.substr(0, str2.indexOf('.'));
+				if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
+					return false;
+				regex = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
+				return regex.test(value);
+			});
+
+			//age validation
+			jQuery.validator.addMethod("age", function (value) {
+				let regex = /^\d{0,3}$/;
+				return regex.test(value);
+			});
+			
+
 			//validation for ckeditor
 			jQuery.validator.addMethod("ckeditor_required", function (value, element) {
 				let editorId  = $(element).attr('id');
 				let editor    = CKEDITOR.instances[editorId];
-				let editorTxt = CKEDITOR.instances[editorId].getData().replace(/<[^>]*>/gi, '').trim();
-				if (editorTxt.length === 0)
-					$(element).val(editorTxt);
+				value = editor.getData().replace(/<[^>]*>/gi, '').trim();
+				if (value.length === 0)
+					$(element).val(value);
 				else
 					$(element).val(editor.getData());
 				return $(element).val().length > 0;
 			});
 
 			//additional validators methods
-			if (typeof this._settings.addToValidator === "function")
-				this._settings.addToValidator.call();
+			let additionalFunction = plugin._settings.addToValidator;
+			if (typeof additionalFunction === "function") additionalFunction(plugin.$_element,myValidator);
+			
+			if (plugin._settings.validateOnLoad) myValidator.form(); //validating form on page load
+			if (plugin._settings.validateOnClick) plugin._bindEvents('._validate_oc', 'click'); //validating form on element click
+			if (plugin._settings.validateOnKeyPress) plugin._bindEvents('._validate_kp', 'keypress'); //validating form on element keypress
+			if (plugin._settings.resetValidator) plugin._bindEvents('._reset_validator','click',myValidator,'reset'); //reset form on element click
 
-			//validating form on page load
-			if (this._settings.validateOnLoad) myValidator.form();
-			//validating form on click of element
-			if (this._settings.validateOnClick) this._bindEvents('._validate_oc', 'click');
-			//validating form on click of element
-			if (this._settings.validateOnKeyPress) this._bindEvents('._validate_kp', 'keypress');
+			myValidator.showErrors(plugin._showErrors);
+
 
 		},
 
-		//Jquery Validator Function default definition
+		_normalizer: function(value) {
+			return $.trim(value);
+		},
+
 		_highlight: function (element, errorClass, validClass) {
 			if(jQuery(element).next().hasClass('input-group-append'))
 				jQuery(element).next().children().addClass(errorClass).removeClass(validClass);
@@ -228,12 +266,9 @@
 		},
 
 		// Callback methods
-		_callback: function (form) {
-			let onComplete = this._settings.onComplete;
-			if (typeof onComplete === "function") {
-				onComplete(form);
-			} else
-				console.log('Default callback function is called..');
+		_callback: function (form,event=null) {
+			let onComplete = plugin._settings.onComplete;
+			if (typeof onComplete === "function") onComplete(form,event);
 		}
 	});
 
@@ -253,21 +288,25 @@
 		errorClass        : 'error',
 		errorElement      : 'div',
 		validClass        : 'success',
+		groups            : null,
+		require_from_group: null,
+		normalizer        : null,
+		validateOnLoad    : false,
+		validateOnClick   : false,
+		validateOnKeyPress: false,
+		resetValidator    : false,
+		destroyOnCallback : false,
 		highlight         : null,
 		unhighlight       : null,
 		invalidHandler    : null,
 		errorPlacement    : null,
-		onComplete        : null,
-		groups            : null,
-		require_from_group: null,
 		addToValidator    : null,
-		validateOnLoad    : false,
-		validateOnClick   : false,
-		validateOnKeyPress: false,
-		destroyOnCallback : false,
+		onComplete        : null,
 		messages          : { //JQuery validator default messages
 			remote            : jQuery.validator.format("{0} is not available."),
-			require_from_group: jQuery.validator.format("Please fill out all {0} fields.")
-		}
+			require_from_group: jQuery.validator.format("Please fill out at least {0} of these fields."),
+			age               : "Please enter valid age."
+		},
+		showErrors: null
 	};
 })(jQuery, window, document);

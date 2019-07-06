@@ -43,7 +43,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validate-wrapper.js"> </script>
+	<script src="../jquery.validate-wrapper.min.js"> </script>
 	<script>
 		$(function () {
 			$('form').validateWrapper({
@@ -111,47 +111,36 @@
 				onComplete: function (form) {
 					submitData(form, $(form).serializeArray()); //callback function is called.
 				},
-				addToValidator    : additionalMethods(),
+				addToValidator    : function(form,validator) {
+					additionalMethods(form,validator);
+				},
 				validateOnLoad    : false,
 				validateOnClick   : true,
 				validateOnKeyPress: false,
 				destroyOnCallback : false,
+				resetValidator    : true,
 				messages          : {
-					g_name_group : "Please Enter Full Name",//setting message for group
-					required     : "Please don't keep the field empty.",//setting different message
-					valid_email  : "Please enter valid email.",//adding new validator Message
+					g_name_group : "Please Enter Full Name", //setting message for group
+					required     : "Please don't keep the field empty.",  //setting different message
 					rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")//setting message for require_from_group
 				}
 			});
-			outer_validation_methods();
 		});
 
 		//Additional Function
-		function additionalMethods() {
-
+		function additionalMethods(form,validator) {
 			$("input:filled, textarea:filled, select:filled").addClass('filled');
 			$("input:blank, textarea:blank, select:blank").addClass('blank');
-
-			jQuery.validator.addMethod("valid_email", function (value, element) {
-				if (value == '')
-					return true;
-				let temp1 = true;
-				let ind = value.indexOf('@');
-				let str2 = value.substr(ind + 1);
-				let str3 = str2.substr(0, str2.indexOf('.'));
-				if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
-					return false;
-				let str1 = value.substr(0, ind);
-				if ((str1.lastIndexOf('_') == (str1.length - 1)) || (str1.lastIndexOf('.') == (str1.length - 1)) || (str1.lastIndexOf('-') == (str1.length - 1)))
-					return false;
-				str = /(^[a-zA-Z0-9]+[\._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(\.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
-				temp1 = str.test(value);
-				return temp1;
-			});
-		}
-
-		function outer_validation_methods(){
-			//custom rules can be set here.
+			if ($("#password", form).length) {
+				$("#password", form).rules("add", {
+					messages: { required: "Please enter strong password." }
+				});
+			}
+			if ($("#confirm_password", form).length) {
+				$("#confirm_password", form).rules("add", {
+					messages: { equalTo: "Please enter same password." }
+				});
+			}
 		}
 
 		//this is my callback function
@@ -169,8 +158,7 @@
 				<form action="" id="demoForm" name="demoForm" method="POST" novalidate="novalidate" onsubmit="return false;">
 					<div class="form-group">
 						<label for="email">Email address:</label>
-						<input type="text" class="form-control _validate_kp" id="email" name="email" required="true"
-							valid_email="true" />
+						<input type="email" class="form-control _validate_kp" id="email" name="email" required="true"  />
 					</div>
 					<div class="form-group">
 						<div class="row">
@@ -198,7 +186,7 @@
 					</div>
 					<div class="form-group">
 						<label for="age">Age:</label>
-						<input type="number" class="form-control" id="age" name="age" required="true" step="5" />
+						<input type="number" class="form-control" id="age" name="age" required="true" step="5" age="true" />
 					</div>
 					<div class="form-group">
 						<label for="username">Password:</label>
@@ -270,8 +258,9 @@
 								id="terms_and_conditions" required="true"> Accept terms and conditions
 						</label>
 					</div>
-					<button type="submit" name="Submit" class="btn btn-primary">Submit</button>
-					<button type="button" name="Button" class="btn btn-primary _validate_oc">Button</button>
+					<button type="submit" name="submit_btn" class="btn btn-primary">Submit</button>
+					<button type="button" name="validate_btn" class="btn btn-primary _validate_oc">Button</button>
+					<button type="reset" name="reset_btn" class="btn btn-primary _reset_validator">Reset</button>
 				</form>
 			</div>
 		</div>
