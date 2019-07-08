@@ -151,7 +151,7 @@
 				}
 			}
 
-			//overriding email validation. 
+			//overriding email validation.
 			jQuery.validator.addMethod("email", function (value) {
 				if (value == '')
 					return true;
@@ -173,7 +173,6 @@
 				let regex = /^\d{0,3}$/;
 				return regex.test(value);
 			});
-			
 
 			//validation for ckeditor
 			jQuery.validator.addMethod("ckeditor_required", function (value, element) {
@@ -190,7 +189,7 @@
 			//additional validators methods
 			let additionalFunction = plugin._settings.addToValidator;
 			if (typeof additionalFunction === "function") additionalFunction(plugin.$_element,myValidator);
-			
+
 			if (plugin._settings.validateOnLoad) myValidator.form(); //validating form on page load
 			if (plugin._settings.validateOnClick) plugin._bindEvents('._validate_oc', 'click'); //validating form on element click
 			if (plugin._settings.validateOnKeyPress) plugin._bindEvents('._validate_kp', 'keypress'); //validating form on element keypress
