@@ -31,7 +31,7 @@ Note: `name` , `novalidate` and `onsubmit` attributes are compulsory.
 
 ## [Documentation](https://sid04naik.github.io/jquery.validate-wrapper/)
 
-* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper).
+* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper/releases/tag/v1.19.1).
 * Load the jquery.validate-wrapper.
 
 ### CDN
