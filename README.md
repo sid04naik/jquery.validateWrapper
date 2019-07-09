@@ -1,4 +1,4 @@
-# jquery.validate-wrapper v1.19.1
+# jquery.validate-wrapper v1.19.1 [![CodeFactor](https://www.codefactor.io/repository/github/sid04naik/jquery.validate-wrapper/badge)](https://www.codefactor.io/repository/github/sid04naik/jquery.validate-wrapper)
 
 This wrapper plugin will run above the **[JQuery Validation Plugin](https://jqueryvalidation.org/)**.
 
