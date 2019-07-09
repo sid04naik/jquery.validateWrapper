@@ -60,7 +60,7 @@
 			$(selector,plugin.$_element).on(eventHandler + '.' + plugin._pluginName, function () {
 				switch(task) {
 					case 'reset':
-						if($(selector,plugin.$_element).attr('type') == "reset") validator.resetForm();
+						if($(selector,plugin.$_element).attr('type') == "reset" || $(selector,plugin.$_element).attr('type') == "button") validator.resetForm();
 					break;
 					case 'validate': //validate
 					default:
@@ -87,7 +87,7 @@
 		//validate wrapper
 		_validate: function () {
 			var myValidator;
-			let extraParams = {
+			let validatorOptions = {
 				normalizer    : (typeof plugin._settings.normalizer === "function") ? plugin._settings.normalizer : plugin._normalizer,
 				highlight     : (typeof plugin._settings.highlight === "function") ? plugin._settings.highlight : plugin._highlight,
 				unhighlight   : (typeof plugin._settings.unhighlight === "function") ?  plugin._settings.unhighlight : tpluginhis._unHighlight,
@@ -100,7 +100,7 @@
 						plugin._destroy(myValidator);
 				},
 			};
-			let validateObj = $.extend({}, plugin._settings, extraParams);
+			let validateObj = $.extend({}, plugin._settings, validatorOptions);
 			myValidator = plugin.$_element.validate(validateObj); //jquery.validate Function
 			plugin._additionalMethod(myValidator); //additional validator methods
 		},
@@ -196,8 +196,6 @@
 			if (plugin._settings.resetValidator) plugin._bindEvents('._reset_validator','click',myValidator,'reset'); //reset form on element click
 
 			myValidator.showErrors(plugin._showErrors);
-
-
 		},
 
 		_normalizer: function(value) {
@@ -302,7 +300,6 @@
 		addToValidator    : null,
 		onComplete        : null,
 		messages          : { //JQuery validator default messages
-			remote            : jQuery.validator.format("{0} is not available."),
 			require_from_group: jQuery.validator.format("Please fill out at least {0} of these fields."),
 			age               : "Please enter valid age."
 		},
