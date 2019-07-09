@@ -52,7 +52,7 @@ This will validate the form elements with default values.
 * Changing default options with user-defined options.
 List of options which the user can define.
 
-1. `ignore`.
+* `ignore`.
 Any field you don't want to validate you can add those here.
 
 ```js
@@ -61,7 +61,7 @@ $('form').validateWrapper({
 });
 ```
 
-2. `errorClass`.
+* `errorClass`.
 You can set your own error class with your own styling.
 
 ```js
@@ -70,7 +70,7 @@ $('form').validateWrapper({
 });
 ```
 
-3. `errorElement`.
+* `errorElement`.
 You can have your own element where you can show the error messages.
 
 ```js
@@ -79,7 +79,7 @@ $('form').validateWrapper({
 });
 ```
 
-4. `validClass`.
+* `validClass`.
 You can set your own valid class with your own styling.
 
 ```js
@@ -88,7 +88,7 @@ $('form').validateWrapper({
 });
 ```
 
-5. `highlight`.
+* `highlight`.
 If you want to highlight any element when the field is validated, then you can add that logic here.
 ```js
 $('form').validateWrapper({
@@ -98,7 +98,7 @@ $('form').validateWrapper({
 });
 ```
 
-6. `unhighlight`.
+* `unhighlight`.
 If you want to unhighlight any element when the field is validation is successful, then you can add that logic here.
 
 ```js
@@ -109,7 +109,7 @@ $('form').validateWrapper({
 });
 ```
 
-7. `invalidHandler`.
+* `invalidHandler`.
 Invalid field handling is done here.
 
 ```js
@@ -120,7 +120,7 @@ $('form').validateWrapper({
 });
 ```
 
-8. `errorPlacement`.
+* `errorPlacement`.
 If you want to place the error as per your convenience then you can write the logic here.
 
 ```js
@@ -131,7 +131,7 @@ $('form').validateWrapper({
 });
 ```
 
-9. `normalizer`
+* `normalizer`
 You can normalize the value before submitting the form.
 
 ```js
@@ -142,7 +142,7 @@ $('form').validateWrapper({
 });
 ```
 
-10. `validateOnLoad`
+* `validateOnLoad`
 If you want to validate the form on load then you need to set it as `true`.
 
 ```js
@@ -151,7 +151,7 @@ $('form').validateWrapper({
 });
 ```
 
-11. `validateOnClick`.
+* `validateOnClick`.
 If you want to validate the form on click of an element then you need to set it as `true` and add class `_validate_oc` to the element on which you want to trigger validation.
 
 ```js
@@ -163,7 +163,7 @@ $('form').validateWrapper({
 <button type="button" name="Button" class="btn btn-primary _validate_oc">Button</button>
 ```
 
-12. `validateOnKeyPress`.
+* `validateOnKeyPress`.
 If you want to validate the form on keypress of an element then you need to set it as `true` and add class `_validate_kp` to the element on which you want to trigger validation.
 
 ```js
@@ -175,7 +175,7 @@ $('form').validateWrapper({
 <input type="email" class="form-control _validate_kp" id="email" name="email"  />
 ```
 
-13. `resetValidator`
+*  `resetValidator`
 if you want to reset the form validation, then you need to set it as `true`. Also `resetValidator` will work only on button type `reset` and button type `button` and the button should have a class called `_reset_validator`.
 
 ```js
@@ -188,7 +188,7 @@ $('form').validateWrapper({
 <button type="button" name="button" class="btn btn-primary _reset_validator">Button</button>
 ```
 
-14. `destroyOnCallback`
+* `destroyOnCallback`
 If you want to destroy the Validator once the callback function is executed, then you need to set it as `true`.
 
 ```js
@@ -197,7 +197,7 @@ $('form').validateWrapper({
 });
 ```
 
-15. `addToValidator`
+*  `addToValidator`
 If you want to add any other validation functions which are not present in the wrapper or you want to set your own validation functions, then you have to create a method and add the method to `addToValidator`.
 
 ```js
@@ -214,7 +214,7 @@ function additionalMethods(form,validator){
 }
 ```
 
-16. `onComplete`
+*  `onComplete`
 Anything you want to execute once the submitHandler is called, then you can have it here. `onComplete` is a callback function called in SubmitHandler.
 
 ```js
@@ -225,7 +225,7 @@ $('form').validateWrapper({
 });
 ```
 
-17. `messages`
+*  `messages`
 If you want to add new error messages or modify the existing messages then it has to be set here.
 
 ```js
@@ -237,7 +237,7 @@ $('form').validateWrapper({
 });
 ```
 
-18. `groups`
+*  `groups`
 If you want to have a group validation then it can be done using `groups`. Please follow the steps to set up group validation.
 
 Step 1: Create a groupName in `groups` and add the fields you want to group together against the groupName.
@@ -278,7 +278,7 @@ $('form').validateWrapper({
 
 Note: You can have multiple groups with unique groupName. So to keep them unique so we follow a convention to set up groups. So the group name will start with a 'g_' followed by group_name.
 
-19. `require_from_group`
+*  `require_from_group`
 Sometimes you need to validate only a few fields from the group then you can use `require_from_group` option to do that. `require_from_group` ensures a given number of fields in a group are complete.
 To set up `require_from_group` validation you have to follow below steps.
 
@@ -332,7 +332,7 @@ $('form').validateWrapper({
 
 Note: group name has to be unique so we follow a convention to setup require_from_group rule. So the group name will start with an 'rfg_' followed by group_name.
 
-20. `showErrors`
+*  `showErrors`
 Show Errors will add the message to the element programmatically.
 
 ```js
@@ -343,36 +343,36 @@ $('form').validateWrapper({
 });
 ```
 
-21.  Included additional validation methods.
-    - `age`
-    Age validation is added in this wrapper. This will allow the user to enter only numbers and the number cannot be greater than 3 digits.
+* Included additional validation methods.
+- `age`
+Age validation is added in this wrapper. This will allow the user to enter only numbers and the number cannot be greater than 3 digits.
 
-    ```html
-    <input type="number" class="form-control" id="age" name="age" age="true" />
-    ```
+```html
+<input type="number" class="form-control" id="age" name="age" age="true" />
+```
 
-    - `ckeditor_required`
-    To validate ckeditor using Jquery validator it is not straight forward. You have to do some settings to validate ckeditor. This wrapper will skip that step for you and allow you to validate ckeditor by just adding an attribute ckeditor_required as true.
+- `ckeditor_required`
+To validate ckeditor using Jquery validator it is not straight forward. You have to do some settings to validate ckeditor. This wrapper will skip that step for you and allow you to validate ckeditor by just adding an attribute ckeditor_required as true.
 
-    ```html
-    <textarea name="content" ck-editor="true" id="content" ckeditor_required="true" ></textarea>
-    ```
+```html
+<textarea name="content" ck-editor="true" id="content" ckeditor_required="true" ></textarea>
+```
 
-22. `hide-validation-message`
+* `hide-validation-message`
 If you don't want to display the error message when the field is validated then you can use `hide-validation-message = true` as an attribute for the element.
 
 ```html
 <input type="text" class="form-control" hide-validation-message=true id="username" name="username" required="true" />
 ```
 
-23. `append-msg-to-parent`
+* `append-msg-to-parent`
 By default, the error message will be appended to the element. But in certain case you want the error message to be appended to its parent element, then you can set `append-msg-to-parent` as an attribute to the element and set the value to `true`.
 
 ```html
 <input type="text" class="form-control" append-msg-to-parent=true id="username" name="username" required="true" />
 ```
 
-24. Setting other jQuery Validator options.
+* Setting other jQuery Validator options.
 You can set all the jQuery Validator options in the wrapper.
 
 ## Demo URL's
