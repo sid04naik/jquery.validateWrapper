@@ -20,17 +20,26 @@
 		this._element    = element;
 		this._pluginName = pluginName;
 		this._defaults   = $.fn[pluginName].defaults;
+
+		if(typeof options == "undefined") options = {};
 		this._settings   = $.extend({}, this._defaults, options);
+
 		delete this._settings.messages;  //removing validator messages from settings
 		delete this._settings.groups; // removing validator groups from settings
 		delete this._settings.require_from_group; // removing validator `required_from_group`s from settings
 		delete this._settings.showErrors; //removing validator errors from settings.
 
-		if (options.messages && typeof options.messages != "object") delete options.messages;
-		if (options.groups && typeof options.groups != "object") delete options.groups;
-		if (options.require_from_group && typeof options.require_from_group != "object") delete options.require_from_group;
-		if (options.showErrors && typeof options.showErrors != "object") delete options.showErrors;
+		if(typeof options.messages == "undefined") options.messages = {};
+		if (!jQuery.isEmptyObject(options.messages) && typeof options.messages != "object") delete options.messages;
 
+		if(typeof options.groups == "undefined") options.groups = {};
+		if (!jQuery.isEmptyObject(options.groups) && typeof options.groups != "object") delete options.groups;
+
+		if(typeof options.require_from_group == "undefined") options.require_from_group = {};
+		if (!jQuery.isEmptyObject(options.require_from_group) && typeof options.require_from_group != "object") delete options.require_from_group;
+
+		if(typeof options.showErrors == "undefined") options.showErrors = {};
+		if (!jQuery.isEmptyObject(options.showErrors) && typeof options.showErrors != "object") delete options.showErrors;
 
 		this._messages           = $.extend({}, this._defaults.messages, options.messages);
 		this._groups             = $.extend({}, this._defaults.groups, options.groups);
@@ -90,7 +99,7 @@
 			let validatorOptions = {
 				normalizer    : (typeof plugin._settings.normalizer === "function") ? plugin._settings.normalizer : plugin._normalizer,
 				highlight     : (typeof plugin._settings.highlight === "function") ? plugin._settings.highlight : plugin._highlight,
-				unhighlight   : (typeof plugin._settings.unhighlight === "function") ?  plugin._settings.unhighlight : tpluginhis._unHighlight,
+				unhighlight   : (typeof plugin._settings.unhighlight === "function") ?  plugin._settings.unhighlight : plugin._unHighlight,
 				invalidHandler: (typeof plugin._settings.invalidHandler === "function") ?  plugin._settings.invalidHandler: plugin._inValidHandler,
 				groups        : (typeof plugin._groups === "object") ? plugin._groups : null,
 				errorPlacement: (typeof plugin._settings.errorPlacement === "function") ? plugin._settings.errorPlacement : plugin._errorPlacement,
