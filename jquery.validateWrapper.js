@@ -1,11 +1,11 @@
 /*!
- * JQuery Validation Wrapper Plugin v1.19.1
- * Works well for jQuery Validation Plugin v1.19.1
+ * JQuery validateWrapper Plugin v1.19.1
+ * Works well for jQuery validate Plugin v1.19.1
  * Copyright (c) 2019 Siddhant Naik
  *
  * Plugin Name: validateWrapper
- * Description: This wrapper plugin will run above the JQuery Validation Plugin.
- * Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code.
+ * Description: This validateWrapper plugin will run above the JQuery Validation Plugin.
+ * Basically, the validateWrapper plugin will help you to validate form elements by adding a few lines of code.
  * Just use the form selector and call the wrapper plugin and the form will start validating.
 */
 ; (function ($) {

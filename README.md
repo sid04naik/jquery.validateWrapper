@@ -1,8 +1,8 @@
 # jquery.validateWrapper v1.19.1
 
-This validateWrapper plugin will run above the **[JQuery Validation Plugin](https://jqueryvalidation.org/)**.
+This validateWrapper plugin will run above the **[JQuery Validate Plugin](https://jqueryvalidation.org/)**.
 
-Basically, the validateWrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating.
+Basically, the validateWrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the validateWrapper plugin and the form will start validating.
 This will help the developers to maintain a single file for all the form. It will also help the developers in terms of code redundancy, latency, and many other aspects.
 
 Below is the documentation please follow them to get started with Jquery.validateWrapper.
@@ -32,15 +32,15 @@ Note: `name` , `novalidate` and `onsubmit` attributes are compulsory.
 ## [Documentation](https://sid04naik.github.io/jquery.validateWrapper/)
 
 * Download jquery.validateWrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validateWrapper/releases/tag/v1.19.1).
-* Load the jquery.validate-wrapper.
+* Load the jquery.validateWrapper.
 
 ### CDN
-- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js)
-- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js)
+- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.min.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.min.js)
+- [https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.js](https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.js)
 
 ```js
-<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.min.js"> </script> //minified
-<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validate-wrapper/1.19.1/jquery.validate-wrapper.js"> </script> //non minified
+<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.min.js"> </script> //minified
+<script src="https://d37xf8bn4ru1eg.cloudfront.net/jquery-validateWrapper/1.19.1/jquery.validateWrapper.js"> </script> //non minified
 ```
 * Initializing the plugin with the default Settings.
 
@@ -345,7 +345,7 @@ $('form').validateWrapper({
 
 * Included additional validation methods.
 - `age`
-Age validation is added in this wrapper. This will allow the user to enter only numbers and the number cannot be greater than 3 digits.
+Age validation is added in this validateWrapper plugin. This will allow the user to enter only numbers and the number cannot be greater than 3 digits.
 
 ```html
 <input type="number" class="form-control" id="age" name="age" age="true" />
@@ -381,6 +381,6 @@ You can set all the jQuery Validator options in the validateWrapper plugin.
 
 ## LICENSE
 
-[MIT License](https://github.com/sid04naik/jquery.validate-wrapper/blob/master/LICENSE)
+[MIT License](https://github.com/sid04naik/jquery.validateWrapper/blob/master/LICENSE)
 
 Copyright (c) 2019 Siddhant Naik
