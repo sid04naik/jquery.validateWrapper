@@ -1,11 +1,11 @@
-# jquery.validate-wrapper v1.19.1 [![CodeFactor](https://www.codefactor.io/repository/github/sid04naik/jquery.validate-wrapper/badge)](https://www.codefactor.io/repository/github/sid04naik/jquery.validate-wrapper)
+# jquery.validateWrapper v1.19.1
 
-This wrapper plugin will run above the **[JQuery Validation Plugin](https://jqueryvalidation.org/)**.
+This validateWrapper plugin will run above the **[JQuery Validation Plugin](https://jqueryvalidation.org/)**.
 
-Basically, the wrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating.
+Basically, the validateWrapper plugin will help you to validate form elements by adding a few lines of code. Just use the form selector and call the wrapper plugin and the form will start validating.
 This will help the developers to maintain a single file for all the form. It will also help the developers in terms of code redundancy, latency, and many other aspects.
 
-Below is the documentation please follow them to get started with Jquery.validate-wrapper.
+Below is the documentation please follow them to get started with Jquery.validateWrapper.
 
 ---
 ## Prerequisites
@@ -29,9 +29,9 @@ Below is the documentation please follow them to get started with Jquery.validat
 Note: `name` , `novalidate` and `onsubmit` attributes are compulsory.
 
 
-## [Documentation](https://sid04naik.github.io/jquery.validate-wrapper/)
+## [Documentation](https://sid04naik.github.io/jquery.validateWrapper/)
 
-* Download jquery.validate-wrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validate-wrapper/releases/tag/v1.19.1).
+* Download jquery.validateWrapper Plugin by clicking on [Download Plugin](https://github.com/sid04naik/jquery.validateWrapper/releases/tag/v1.19.1).
 * Load the jquery.validate-wrapper.
 
 ### CDN
@@ -373,11 +373,11 @@ By default, the error message will be appended to the element. But in certain ca
 ```
 
 * Setting other jQuery Validator options.
-You can set all the jQuery Validator options in the wrapper.
+You can set all the jQuery Validator options in the validateWrapper plugin.
 
 ## Demo URL's
-*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/default-demo.html)
-*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.validate-wrapper/demo/demo-with-params.html)
+*   [Demo with Default Parameters](https://sid04naik.github.io/jquery.validateWrapper/demo/default-demo.html)
+*   [Demo with all valid Parameters](https://sid04naik.github.io/jquery.validateWrapper/demo/demo-with-params.html)
 
 ## LICENSE
 
