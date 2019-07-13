@@ -1,0 +1,11 @@
+
+{
+  "name": "jquery.validate-wrapper",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sid04naik/jquery.validate-wrapper.git"
+  },
+  "description": "Wrapper plugin for JQuery Validate Plugin.",
+  "author": "Siddhant Naik",
+  "version": "1.19.1"
+}
