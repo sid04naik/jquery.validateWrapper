@@ -56,7 +56,7 @@
 				required     : "Please don't keep the field empty.",  //setting different message
 				rfg_dob_group: jQuery.validator.format("Please Select at least {0} dropdowns.")//setting message for require_from_group
 			};
-			Object.freeze(MESSAGES);
+			Object.freeze(MESSAGES); //this will not allow you to change the value of MESSAGES
 
 			$('form').validateWrapper({
 				ignore      : ":hidden:not(.hidden-required), .ignore, .ignore-validate",
@@ -136,7 +136,7 @@
 		});
 
 		//Additional Function
-		function additionalMethods(form,validator) {
+		const additionalMethods = (form,validator) => {
 			"use strict";
 			$("input:filled, textarea:filled, select:filled").addClass('filled');
 			$("input:blank, textarea:blank, select:blank").addClass('blank');
@@ -153,7 +153,7 @@
 		}
 
 		//this is my callback function
-		submitData = (form, data) => console.log('Submit Data function is called..');
+		const submitData = (form, data) => console.log('Submit Data function is called..');
 	</script>
 </head>
 
