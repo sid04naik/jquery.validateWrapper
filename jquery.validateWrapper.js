@@ -13,13 +13,14 @@
 	"use strict";
 
 	//Default Parameters
-	let plugin, pluginName = "validateWrapper";
+	let plugin;
+	const PLUGIN_NAME = "validateWrapper";
 
 	//Plugin constructor
 	function Plugin(element, options) {
 		this._element    = element;
-		this._pluginName = pluginName;
-		this._defaults   = $.fn[pluginName].defaults;
+		this._pluginName = PLUGIN_NAME;
+		this._defaults   = $.fn[PLUGIN_NAME].defaults;
 
 		if(typeof options == "undefined") options = {};
 		this._settings   = $.extend({}, this._defaults, options);
@@ -279,17 +280,17 @@
 	});
 
 	//Plugin Wrapper
-	$.fn[pluginName] = function (options) {
+	$.fn[PLUGIN_NAME] = function (options) {
 		this.each(function () {
-			if (!$.data(this, "plugin_" + pluginName)) {
-				$.data(this, "plugin_" + pluginName, new Plugin(this, options));
+			if (!$.data(this, "plugin_" + PLUGIN_NAME)) {
+				$.data(this, "plugin_" + PLUGIN_NAME, new Plugin(this, options));
 			}
 		});
 		return this;
 	};
 
 	//setting Default values
-	$.fn[pluginName].defaults = {
+	$.fn[PLUGIN_NAME].defaults = {
 		ignore            : ":hidden:not(.hidden-required, .editor-required), .ignore",
 		errorClass        : 'error',
 		errorElement      : 'div',
