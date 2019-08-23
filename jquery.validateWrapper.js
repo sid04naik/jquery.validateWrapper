@@ -174,7 +174,7 @@
 				str3 = str2.substr(0, str2.indexOf('.'));
 				if (str3.lastIndexOf('-') == (str3.length - 1) || (str3.indexOf('-') != str3.lastIndexOf('-')))
 					return false;
-				regex = /(^[a-zA-Z0-9]+[._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*@([a-zA-Z0-9]+[-]{0,1})+(.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
+				regex = /(^[a-zA-Z0-9]+[._-]{0,1})+([a-zA-Z0-9]+[_]{0,1})*?[a-zA-Z0-9]@([a-zA-Z0-9]+[-]{0,1})+(.[a-zA-Z0-9]+)*(\.[a-zA-Z]{2,})$/;
 				return regex.test(value);
 			});
 
