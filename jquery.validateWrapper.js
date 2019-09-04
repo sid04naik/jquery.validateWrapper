@@ -1,6 +1,6 @@
 /*!
- * JQuery validateWrapper Plugin v1.19.1
- * Works well for jQuery validate Plugin v1.19.1
+ * JQuery validateWrapper Plugin v1.19.2
+ * Works well for jQuery validate Plugin v1.19.2
  * Copyright (c) 2019 Siddhant Naik
  *
  * Plugin Name: validateWrapper
@@ -133,10 +133,18 @@
 					if (i == j) {
 						if (plugin._messages[j] != '') {
 							$('.' + j).each(function () {
-								if ($("[name=" + this.name + "]", plugin.$_element).length) {
-									$("[name=" + this.name + "]", plugin.$_element).rules("add", {
-										messages: { 'require_from_group': plugin._messages[j] }
+								if($('input[name^="'+this.name+'"]', plugin.$_element).length) {
+									$('input[name^="'+this.name+'"]', plugin.$_element).each(function() {
+										$("#"+this.id, plugin.$_element).rules("add", {
+											messages: { 'require_from_group': plugin._messages[j] }
+										});
 									});
+								}else {
+									if ($("[name=" + this.name + "]", plugin.$_element).length) {
+										$("[name=" + this.name + "]", plugin.$_element).rules("add", {
+											messages: { 'require_from_group': plugin._messages[j] }
+										});
+									}
 								}
 							});
 						}

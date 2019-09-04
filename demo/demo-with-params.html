@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<title>JQuery Validate Wrapper</title>
 	<meta charset = "utf-8">
@@ -47,7 +46,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validateWrapper.min.js"> </script>
+	<script src="../jquery.validateWrapper.js"> </script>
 	<script>
 		$(function () {
 
@@ -68,7 +67,7 @@
 					g_name_group: "first_name last_name",
 				},
 				require_from_group: {
-					rfg_dob_group: 2,
+					rfg_dob_group: 2
 				},
 				highlight: function (element, errorClass, validClass) {
 					if(jQuery(element).next().hasClass('input-group-append'))
@@ -111,10 +110,15 @@
 					else if (element.is('input[type=checkbox]') || element.is('input[type=radio]'))
 						element.closest('.form-check').parent().append(error);
 					else if (element.hasClass('required-from-group')) {
-						let lastElement = $('.rfg_dob_group:last');
-						if ($(element).attr('name') == $(lastElement).attr('name'))
-							error.insertAfter(lastElement.parent().parent());
-					} else if (element.hasClass('group-in-one')) {
+						if(element.hasClass('rfg_dob_group')) {
+							let lastElement = $('.rfg_dob_group:last');
+							if ($(element).attr('name') == $(lastElement).attr('name'))
+								error.insertAfter(lastElement.parent().parent());
+						}else{
+							error.insertAfter(element);
+						}
+					}
+					else if (element.hasClass('group-in-one')) {
 						let lastEl = $('.g_name_group:last');
 						error.insertAfter(lastEl.parent().parent());
 					} else
@@ -151,12 +155,10 @@
 				});
 			}
 		}
-
 		//this is my callback function
 		const submitData = (form, data) => console.log('Submit Data function is called..');
 	</script>
 </head>
-
 <body>
 	<div class="container">
 		<div class="clearfix" style="height:30px;"></div>
@@ -273,5 +275,4 @@
 		</div>
 	</div>
 </body>
-
 </html>
