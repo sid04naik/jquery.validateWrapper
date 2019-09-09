@@ -116,7 +116,7 @@
 					else if (element.hasClass('required-from-group')) {
 						if(element.hasClass('rfg_dob_group')) {
 							let lastElement = $('.rfg_dob_group:last');
-							if ($(element).attr('name') == $(lastElement).attr('name'))
+							if ($(element).attr('id') == $(lastElement).attr('id'))
 								error.insertAfter(lastElement.parent().parent());
 						}else{
 							error.insertAfter(element);

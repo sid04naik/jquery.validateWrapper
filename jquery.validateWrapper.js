@@ -133,18 +133,16 @@
 					if (i == j) {
 						if (plugin._messages[j] != '') {
 							$('.' + j).each(function () {
-								if($('input[name^="'+this.name+'"]', plugin.$_element).length) {
+								if( typeof $('input[name^="'+this.name+'"]', plugin.$_element) != "undefined" ) {
 									$('input[name^="'+this.name+'"]', plugin.$_element).each(function() {
 										$("#"+this.id, plugin.$_element).rules("add", {
 											messages: { 'require_from_group': plugin._messages[j] }
 										});
 									});
-								}else {
-									if ($("[name=" + this.name + "]", plugin.$_element).length) {
-										$("[name=" + this.name + "]", plugin.$_element).rules("add", {
-											messages: { 'require_from_group': plugin._messages[j] }
-										});
-									}
+								}else if (typeof $("[name=" + this.name + "]", plugin.$_element) != "undefined" ) {
+									$("[name=" + this.name + "]", plugin.$_element).rules("add", {
+										messages: { 'require_from_group': plugin._messages[j] }
+									});
 								}
 							});
 						}
