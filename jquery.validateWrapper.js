@@ -156,7 +156,13 @@
 					if (i == j) {
 						if (plugin._messages[j] != '') {
 							$('.' + j).each(function () {
-								if ($("[name=" + this.name + "]", plugin.$_element).length) {
+								if( typeof $('input[name^="'+this.name+'"]', plugin.$_element) != "undefined" ) {
+									$('input[name^="'+this.name+'"]', plugin.$_element).each(function() {
+										$("#"+this.id, plugin.$_element).rules("add", {
+											messages: { required: plugin._messages[j] }
+										});
+									});
+								}else if (typeof $("[name=" + this.name + "]", plugin.$_element) != "undefined" ) {
 									$("[name=" + this.name + "]", plugin.$_element).rules("add", {
 										messages: { required: plugin._messages[j] }
 									});
@@ -261,7 +267,7 @@
 			else if (element.hasClass('required-from-group')) {
 				for (let k in plugin._require_from_group) {
 					let lastElement = $('.' + k + ':last');
-					if ($(element).attr('name') == $(lastElement).attr('name')) {
+					if ($(element).attr('id') == $(lastElement).attr('id')) {
 						error.insertAfter(lastElement.parent().parent());
 						break;
 					}
@@ -269,9 +275,11 @@
 			} else if (element.hasClass('group-in-one')) {
 				for (let key in plugin._groups) {
 					if (element.hasClass(key)) {
-						let lastEl = $('.' + key + ':last');
-						error.insertAfter(lastEl.parent().parent());
-						break;
+						let lastElement = $('.' + key + ':last');
+						if ($(element).attr('id') == $(lastElement).attr('id')) {
+							error.insertAfter(lastElement.parent().parent());
+							break;
+						}
 					}
 				}
 			} else

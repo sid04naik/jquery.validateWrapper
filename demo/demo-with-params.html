@@ -46,7 +46,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.min.js"></script>
-	<script src="../jquery.validateWrapper.min.js"> </script>
+	<script src="../jquery.validateWrapper.js"> </script>
 	<script>
 		$(function () {
 
@@ -118,14 +118,18 @@
 							let lastElement = $('.rfg_dob_group:last');
 							if ($(element).attr('id') == $(lastElement).attr('id'))
 								error.insertAfter(lastElement.parent().parent());
-						}else{
+						}else
 							error.insertAfter(element);
-						}
 					}
 					else if (element.hasClass('group-in-one')) {
-						let lastEl = $('.g_name_group:last');
-						error.insertAfter(lastEl.parent().parent());
-					} else
+						if(element.hasClass('g_name_group')) {
+							let lastElement = $('.g_name_group:last');
+							if ($(element).attr('id') == $(lastElement).attr('id'))
+								error.insertAfter(lastElement.parent().parent());
+						}else
+							error.insertAfter(element);
+					}
+					else
 						error.insertAfter(element);
 				},
 				onComplete: function (form) {
@@ -177,13 +181,13 @@
 						<div class="row">
 							<div class="col">
 								<label for="first_name">First Name:</label>
-								<input type="text" class="form-control g_name_group group-in-one " id="first_name"
+								<input type="text" class="form-control g_name_group  group-in-one" id="first_name"
 									name="first_name" required="true" />
 							</div>
 							<div class="col">
 								<label for="last_name">Last Name:</label>
-								<input type="text" class="form-control g_name_group group-in-one" id="last_name"
-									name="last_name" value="Luis" required="true" />
+								<input type="text" class="form-control g_name_group  group-in-one" id="last_name"
+									name="last_name" required="true" />
 							</div>
 						</div>
 					</div>
