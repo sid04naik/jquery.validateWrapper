@@ -10,3 +10,5 @@ Thumbs.db
 .composer/
 *.DS_Store
 .DS_Store
+node_modules
+.eslintrc.json
