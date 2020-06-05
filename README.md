@@ -1,4 +1,4 @@
-# jquery.validateWrapper v1.19.1 [![CodeFactor](https://www.codefactor.io/repository/github/sid04naik/jquery.validatewrapper/badge)](https://www.codefactor.io/repository/github/sid04naik/jquery.validatewrapper) [![Build Status](https://travis-ci.com/sid04naik/jquery.validateWrapper.svg?branch=master)](https://travis-ci.com/sid04naik/jquery.validateWrapper)
+# jquery.validateWrapper v1.19.1 [![CodeFactor](https://www.codefactor.io/repository/github/sid04naik/jquery.validatewrapper/badge)](https://www.codefactor.io/repository/github/sid04naik/jquery.validatewrapper)
 
 This validateWrapper plugin will run above the **[JQuery Validate Plugin](https://jqueryvalidation.org/)**.
 
