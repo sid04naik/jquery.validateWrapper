@@ -383,4 +383,4 @@ You can set all the jQuery Validator options in the validateWrapper plugin.
 
 [MIT License](https://github.com/sid04naik/jquery.validateWrapper/blob/master/LICENSE)
 
-Copyright (c) 2019 Siddhant Naik
+Copyright (c) 2020 Siddhant Naik
